@@ -1,0 +1,226 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Changelog, Xuanji</title>
+<meta name="description" content="The version history of the Xuanji sonification library, from the first public 0.1 through the 1.x line, with the DOI for each archived release.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="../assets/img/logo/logo-mono.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=Noto+Serif+SC:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/xuanji-docs.css">
+
+<header class="masthead">
+  <div class="masthead__bar">
+    <a class="brand" href="index.html" aria-label="Xuanji home">
+      <img class="brand__logo" src="../assets/img/logo/logo.svg" alt="Xuanji">
+      <span class="brand__tag">sonification library</span>
+    </a>
+    <span class="pill pill--accent">v1.4.2</span>
+    <nav class="masthead__nav">
+      <a href="index.html">Overview</a>
+      <a href="install.html">Install</a>
+      <a href="tutorial.html">Tutorial</a>
+      <a href="mapping.html">Mapping</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="cite.html">Cite</a>
+      <a href="https://github.com/xuanji-project/xuanji" rel="external">GitHub</a>
+      <span class="pipchip" data-copy="pip install xuanji" data-label="pip install xuanji" title="click to copy"><b>$</b> pip install xuanji</span>
+    </nav>
+  </div>
+</header>
+<div class="score-strip" role="presentation"></div>
+
+<div class="docs">
+  <aside class="docs__side">
+    <button class="menu-toggle" aria-label="Toggle navigation">
+      <svg class="glyph" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg> Contents
+    </button>
+    <div class="nav-groups">
+      <div class="nav-group">
+        <p class="nav-group__h">Getting started</p>
+        <ul class="nav-list">
+          <li><a href="index.html">Overview</a></li>
+          <li><a href="install.html">Install &amp; quickstart</a></li>
+        </ul>
+      </div>
+      <div class="nav-group">
+        <p class="nav-group__h">Guides</p>
+        <ul class="nav-list">
+          <li><a href="tutorial.html">Tutorial</a></li>
+          <li><a href="mapping.html">Mapping model</a></li>
+          <li><a href="mapping.html#api">API reference</a></li>
+          <li><a href="gallery.html">Audio gallery</a></li>
+        </ul>
+      </div>
+      <div class="nav-group">
+        <p class="nav-group__h">Project</p>
+        <ul class="nav-list">
+          <li><a href="cite.html">How to cite</a></li>
+          <li><a href="changelog.html" class="is-active">Changelog</a></li>
+          <li><a href="gallery.html#contribute">Contribute a record</a></li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+  <main class="docs__main">
+    <div class="page-head">
+      <p class="crumb">Project / Changelog</p>
+      <h1>Changelog</h1>
+      <p class="sub">Every notable change, newest first. Xuanji follows semantic versioning: the mapping model is stable across the 1.x line, and any change that would alter the audio a record returns is a breaking change and would bump the major version. Each tagged release is archived on Zenodo with its own DOI (see <a href="cite.html#software">how to cite</a>).</p>
+    </div>
+
+    <div class="prose">
+      <div class="note">
+        <span class="note__k">Reading this file</span>
+        Changes are grouped as <strong>Added</strong>, <strong>Changed</strong>, <strong>Fixed</strong>, and <strong>Deprecated</strong>. Anything that touches the sound of an existing record is called out explicitly, because determinism is the promise this project keeps.
+      </div>
+
+      <h2 id="v1-4-2">1.4.2 &middot; 2026-06-18</h2>
+      <p class="event__id" style="margin:-6px 0 12px">patch &middot; DOI <code>10.5281/zenodo.7724011</code> (reserved)</p>
+      <ul>
+        <li><strong>Fixed</strong> a rounding drift in <code>TimeToTempo</code> that could shift the final sample by one frame on very long records; checksums for all 42 curated records were re-verified and are unchanged at audio resolution.</li>
+        <li><strong>Fixed</strong> a matplotlib 3.9 deprecation warning in <code>xj.plot()</code>.</li>
+        <li><strong>Changed</strong> the wheel to ship the bundled record archive as a single compressed asset, cutting install size by about a third.</li>
+      </ul>
+
+      <h2 id="v1-4-0">1.4.0 &middot; 2026-05-02</h2>
+      <p class="event__id" style="margin:-6px 0 12px">minor &middot; DOI <code>10.5281/zenodo.7719884</code></p>
+      <ul>
+        <li><strong>Added</strong> six curated records, bringing the gallery to 42: the guest star of 393, SN 1181 (Cassiopeia, remnant still debated), the Great Comet of 1577, the 1361 Ming eclipse, the 1128 sunspot, and the 1770 great aurora.</li>
+        <li><strong>Added</strong> <code>xj.records(kind=...)</code> filtering and the one-line gallery build loop documented on the <a href="install.html#batch">install</a> page.</li>
+        <li><strong>Added</strong> <code>grid="continuous"</code> to bypass 12-tone equal temperament for listeners who want the raw pitch surface.</li>
+        <li><strong>Changed</strong> nothing in the audio of existing records; all prior checksums hold.</li>
+      </ul>
+
+      <h2 id="v1-3-0">1.3.0 &middot; 2026-03-14</h2>
+      <p class="event__id" style="margin:-6px 0 12px">minor &middot; DOI <code>10.5281/zenodo.7711204</code></p>
+      <ul>
+        <li><strong>Added</strong> the <code>SkyPath</code> data object and <code>PositionToStereo</code> support for moving objects, so a comet's recorded night-by-night track pans across the stereo field. First used by the Halley 1066 record.</li>
+        <li><strong>Added</strong> the <code>hemisphere</code> stereo mode alongside <code>azimuth</code> and <code>fixed</code>.</li>
+        <li><strong>Fixed</strong> a precession bug where a record's position was placed in the J2000 frame instead of the frame of its own date; positions now go through Astropy at the record's epoch. This changes the stereo image of five records; their checksums were updated and the change is noted in each record's history.</li>
+      </ul>
+
+      <h2 id="v1-2-0">1.2.0 &middot; 2026-01-20</h2>
+      <p class="event__id" style="margin:-6px 0 12px">minor &middot; DOI <code>10.5281/zenodo.7702553</code></p>
+      <ul>
+        <li><strong>Added</strong> uncertainty as a first-class input: <code>date_sigma</code> and <code>pos_sigma</code> on the data objects, and <code>render(..., jitter=...)</code> to fold a record's dating or position error into the onset and the stereo width. A coarse record now sounds coarse.</li>
+        <li><strong>Added</strong> <code>gap="mark"</code> to place a faint tick at each observation gap, so a listener hears where a record went dark.</li>
+        <li><strong>Changed</strong> the default for text-derived records to render with <code>jitter="date_sigma"</code>, matching how the paper reports them.</li>
+      </ul>
+
+      <div class="score-strip score-strip--section" role="presentation"></div>
+
+      <h2 id="v1-1-0">1.1.0 &middot; 2025-11-08</h2>
+      <p class="event__id" style="margin:-6px 0 12px">minor &middot; DOI <code>10.5281/zenodo.7688120</code></p>
+      <ul>
+        <li><strong>Added</strong> a conda-forge feedstock: <code>conda install -c conda-forge xuanji</code>.</li>
+        <li><strong>Added</strong> the <code>timbre</code> option on <code>Sonifier</code> (<code>sine</code>, <code>triangle</code>, <code>pluck</code>), documented as a listening aid that carries no data.</li>
+        <li><strong>Added</strong> <code>xj.data.load_kepler</code> and <code>xj.data.load_aavso</code> helpers for bringing your own modern light curves.</li>
+        <li><strong>Fixed</strong> a Windows path bug in <code>Audio.write</code> for FLAC output.</li>
+      </ul>
+
+      <h2 id="v1-0-0">1.0.0 &middot; 2025-09-30</h2>
+      <p class="event__id" style="margin:-6px 0 12px">major, first stable &middot; DOI <code>10.5281/zenodo.7671009</code></p>
+      <ul>
+        <li><strong>Added</strong> the peer-reviewed <em>Journal of Open Source Software</em> paper (accepted September 2025) describing the mapping model and the reconstruction-and-uncertainty method.</li>
+        <li><strong>Added</strong> the determinism guarantee: given the same input, parameters, and version, <code>render</code> returns byte-identical audio, checked in CI against stored checksums for every curated record.</li>
+        <li><strong>Changed</strong> the public API to its stable surface: <code>BrightnessToPitch</code>, <code>TimeToTempo</code>, <code>PositionToStereo</code>, <code>Sonifier</code>, <code>LightCurve</code>, <code>Record</code>, <code>Audio</code>, and the module shortcuts. No breaking changes are allowed within 1.x.</li>
+        <li><strong>Added</strong> the curated gallery at 24 records, each with a primary source, a modern cross-identification, and a confidence grade.</li>
+      </ul>
+
+      <h2 id="v0-9-0">0.9.0 &middot; 2025-07-15</h2>
+      <p class="event__id" style="margin:-6px 0 12px">release candidate</p>
+      <ul>
+        <li><strong>Changed</strong> the record schema to require a confidence field, so no record can ship without stating how firm its identification is.</li>
+        <li><strong>Added</strong> the schema validator and a CI job that rejects a record missing a source or a cross-id.</li>
+        <li><strong>Deprecated</strong> the pre-1.0 <code>quick_sonify()</code> convenience function in favour of <code>xj.sonify()</code>.</li>
+      </ul>
+
+      <h2 id="v0-5-0">0.5.0 &middot; 2025-04-11</h2>
+      <ul>
+        <li><strong>Added</strong> <code>xj.plot()</code>, the two-panel plate (waveform above, log-frequency spectrogram below), which became the house figure convention.</li>
+        <li><strong>Added</strong> the first small gallery: SN 1006 (Lupus), SN 1054 (the Crab, in Taurus), SN 1604 (Kepler), and the Dunhuang star chart (~700 CE).</li>
+        <li><strong>Changed</strong> pitch mapping to snap to 12-tone equal temperament by default.</li>
+      </ul>
+
+      <h2 id="v0-3-0">0.3.0 &middot; 2025-02-02</h2>
+      <ul>
+        <li><strong>Added</strong> <code>TimeToTempo</code> and <code>PositionToStereo</code>, completing the three-channel model.</li>
+        <li><strong>Added</strong> the <code>LightCurve</code> object and the bridge to the sibling record archive via <code>xj.from_record()</code>.</li>
+      </ul>
+
+      <h2 id="v0-1-0">0.1.0 &middot; 2024-12-09</h2>
+      <p class="event__id" style="margin:-6px 0 12px">first public release</p>
+      <ul>
+        <li><strong>Added</strong> the first working sonifier: <code>BrightnessToPitch</code> and a mono renderer, built to give one archive's records a second sense. The whole thing fit in one file and played the guest star of 1054 as a falling tone.</li>
+      </ul>
+
+      <div class="note note--warn">
+        <span class="note__k">Before 0.1</span>
+        Xuanji started as one student's script to hear an archive of historical sky-records rather than only read them. The three-rule model, the honesty about uncertainty, and the refusal to invent data between points were there from the first commit; everything since has been making them reproducible, tested, and citable.
+      </div>
+
+      <p style="margin-top:2rem"><a href="gallery.html">Back to the gallery &rarr;</a></p>
+    </div>
+  </main>
+
+  <nav class="docs__toc" aria-label="On this page">
+    <p class="toc-h">On this page</p>
+    <ul class="toc-list">
+      <li><a href="#v1-4-2">1.4.2</a></li>
+      <li><a href="#v1-4-0">1.4.0</a></li>
+      <li><a href="#v1-3-0">1.3.0</a></li>
+      <li><a href="#v1-2-0">1.2.0</a></li>
+      <li><a href="#v1-1-0">1.1.0</a></li>
+      <li><a href="#v1-0-0">1.0.0</a></li>
+      <li><a href="#v0-9-0">0.9.0</a></li>
+      <li><a href="#v0-5-0">0.5.0</a></li>
+      <li><a href="#v0-3-0">0.3.0</a></li>
+      <li><a href="#v0-1-0">0.1.0</a></li>
+    </ul>
+  </nav>
+</div>
+
+<footer class="foot">
+  <div class="foot__strip" role="presentation"></div>
+  <div class="foot__cols">
+    <div class="foot__id">
+      <img class="foot__logo" src="../assets/img/logo/logo-dark.svg" alt="Xuanji">
+      <p>An open-source engine that renders historical astronomical records as sound. Created by Aiden Yeoh and maintained by the Xuanji contributors. Built on Astropy and the scientific-Python stack.</p>
+    </div>
+    <div>
+      <h5>Docs</h5>
+      <ul>
+        <li><a href="index.html">Overview</a></li>
+        <li><a href="install.html">Install &amp; quickstart</a></li>
+        <li><a href="tutorial.html">Tutorial</a></li>
+        <li><a href="mapping.html">Mapping model &amp; API</a></li>
+        <li><a href="gallery.html">Audio gallery</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5>Community</h5>
+      <ul>
+        <li><a href="https://github.com/xuanji-project/xuanji" rel="external">Source (GitHub)</a></li>
+        <li><a href="https://github.com/xuanji-project/xuanji/blob/main/CONTRIBUTING.md" rel="external">Contributing</a></li>
+        <li><a href="gallery.html#contribute">Contribute a record</a></li>
+        <li><a href="changelog.html">Changelog</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5>Cite</h5>
+      <ul>
+        <li>Yeoh, A. et al. (2026). <em>Xuanji</em>. <em>JOSS</em>, 11(118), 6842.</li>
+        <li><a href="https://doi.org/10.21105/joss.06842" rel="external">JOSS DOI</a></li>
+        <li><a href="cite.html">BibTeX &amp; Zenodo</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot__base">
+    <span><img class="foot__seal" src="../assets/img/logo/logo-mono.svg" alt="">Xuanji &middot; 璇玑 &middot; a jade tube for regulating the sky</span>
+    <span>Nebula and remnant imagery: NASA / ESA / CXC, public domain. Charts: British Library and Wikimedia Commons. See IMAGE-CREDITS.</span>
+  </div>
+</footer>
+
+<script src="../assets/js/xuanji.js"></script>

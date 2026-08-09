@@ -1,0 +1,222 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Install &amp; quickstart, Xuanji</title>
+<meta name="description" content="Install Xuanji with pip, conda, or from source, then render your first sonification in under a minute.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="../assets/img/logo/logo-mono.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=Noto+Serif+SC:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/xuanji-docs.css">
+
+<header class="masthead">
+  <div class="masthead__bar">
+    <a class="brand" href="index.html" aria-label="Xuanji home">
+      <img class="brand__logo" src="../assets/img/logo/logo.svg" alt="Xuanji">
+      <span class="brand__tag">sonification library</span>
+    </a>
+    <span class="pill pill--accent">v1.4.2</span>
+    <nav class="masthead__nav">
+      <a href="index.html">Overview</a>
+      <a href="install.html" class="is-active">Install</a>
+      <a href="tutorial.html">Tutorial</a>
+      <a href="mapping.html">Mapping</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="cite.html">Cite</a>
+      <a href="https://github.com/xuanji-project/xuanji" rel="external">GitHub</a>
+      <span class="pipchip" data-copy="pip install xuanji" data-label="pip install xuanji" title="click to copy"><b>$</b> pip install xuanji</span>
+    </nav>
+  </div>
+</header>
+<div class="score-strip" role="presentation"></div>
+
+<div class="docs">
+  <aside class="docs__side">
+    <button class="menu-toggle" aria-label="Toggle navigation">
+      <svg class="glyph" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg> Contents
+    </button>
+    <div class="nav-groups">
+      <div class="nav-group">
+        <p class="nav-group__h">Getting started</p>
+        <ul class="nav-list">
+          <li><a href="index.html">Overview</a></li>
+          <li><a href="install.html" class="is-active">Install &amp; quickstart</a></li>
+        </ul>
+      </div>
+      <div class="nav-group">
+        <p class="nav-group__h">Guides</p>
+        <ul class="nav-list">
+          <li><a href="tutorial.html">Tutorial</a></li>
+          <li><a href="mapping.html">Mapping model</a></li>
+          <li><a href="mapping.html#api">API reference</a></li>
+          <li><a href="gallery.html">Audio gallery</a></li>
+        </ul>
+      </div>
+      <div class="nav-group">
+        <p class="nav-group__h">Project</p>
+        <ul class="nav-list">
+          <li><a href="cite.html">How to cite</a></li>
+          <li><a href="changelog.html">Changelog</a></li>
+          <li><a href="gallery.html#contribute">Contribute a record</a></li>
+          <li><a href="https://github.com/xuanji-project/xuanji/blob/main/CONTRIBUTING.md" rel="external">Contributing guide</a></li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+  <main class="docs__main">
+    <div class="page-head">
+      <p class="crumb">Getting started / Install</p>
+      <h1>Install and first sound</h1>
+      <p class="sub">Xuanji is a pure-Python package with a small, pinned scientific stack. Installing it and rendering a curated record takes about a minute.</p>
+    </div>
+
+    <div class="prose">
+      <h2 id="requirements">Requirements</h2>
+      <p>Xuanji targets Python 3.10 and newer, on Linux, macOS, and Windows. The core runtime is deliberately short.</p>
+      <table class="apitable">
+        <thead><tr><th>Package</th><th>Version</th><th>Used for</th></tr></thead>
+        <tbody>
+          <tr><td><code>python</code></td><td>&ge; 3.10</td><td>the interpreter</td></tr>
+          <tr><td><code>numpy</code></td><td>&ge; 1.24</td><td>light-curve and audio arrays</td></tr>
+          <tr><td><code>scipy</code></td><td>&ge; 1.10</td><td>resampling and filtering</td></tr>
+          <tr><td><code>astropy</code></td><td>&ge; 5.3</td><td>coordinates, precession, time scales</td></tr>
+          <tr><td><code>soundfile</code></td><td>&ge; 0.12</td><td>writing WAV and FLAC (<code>[audio]</code> extra)</td></tr>
+          <tr><td><code>matplotlib</code></td><td>&ge; 3.7</td><td>the two-panel plate (<code>[audio]</code> extra)</td></tr>
+        </tbody>
+      </table>
+
+      <h2 id="install">Install</h2>
+      <p>Pick one. The <code>[audio]</code> extra pulls in <code>soundfile</code> and <code>matplotlib</code> so you can write files and draw plates; without it you still get the raw audio array.</p>
+      <div class="codecard" data-tabs style="max-width:640px">
+        <div class="codecard__tabs">
+          <button class="codecard__tab is-active" data-tab="pip">pip</button>
+          <button class="codecard__tab" data-tab="conda">conda</button>
+          <button class="codecard__tab" data-tab="source">source</button>
+        </div>
+        <div class="codecard__body" data-pane="pip"><pre>pip install "xuanji[audio]"</pre></div>
+        <div class="codecard__body" data-pane="conda" hidden><pre>conda install -c conda-forge xuanji</pre></div>
+        <div class="codecard__body" data-pane="source" hidden><pre>git clone https://github.com/xuanji-project/xuanji
+cd xuanji
+pip install -e ".[audio,dev]"
+pytest -q            # 214 passed</pre></div>
+        <div class="codecard__cap">a virtual environment (venv or conda) is recommended, not required</div>
+      </div>
+
+      <div class="note">
+        <span class="note__k">Note</span>
+        On Linux, <code>soundfile</code> needs the system <code>libsndfile</code> library. On Debian or Ubuntu: <code>sudo apt-get install libsndfile1</code>. conda-forge ships it automatically.
+      </div>
+
+      <p>The record archive is bundled with the package, so no network access is needed after install. To track new records between releases, install the optional data channel with <code>pip install "xuanji[archive]"</code>, which pulls curated additions from the sibling archive's tagged releases.</p>
+
+      <h2 id="verify">Verify the install</h2>
+      <p>Confirm the version and that the bundled records load.</p>
+      <div class="code">
+        <div class="code__label"><span>python</span><span>verify</span></div>
+        <pre><span class="t-kw">import</span> xuanji <span class="t-kw">as</span> xj
+<span class="t-fn">print</span>(xj.__version__)          <span class="t-com"># 1.4.2</span>
+<span class="t-fn">print</span>(<span class="t-fn">len</span>(xj.records()))       <span class="t-com"># 42 curated events</span></pre>
+      </div>
+      <div class="code code--out">
+        <div class="code__label"><span>output</span><span></span></div>
+        <pre>1.4.2
+42</pre>
+      </div>
+
+      <h2 id="quickstart">Quickstart: sixty seconds to a sonification</h2>
+      <p>The fastest path uses a curated record from the archive. Each record already declares its source, its cross-identification, and the mapping it was published with, so <code>sonify</code> needs nothing else.</p>
+      <div class="code">
+        <div class="code__label"><span>quickstart.py</span><span>python</span></div>
+        <pre><span class="t-kw">import</span> xuanji <span class="t-kw">as</span> xj
+
+<span class="t-com"># 1. load a curated, cross-identified record</span>
+rec = xj.from_record(<span class="t-str">"XJ-1054"</span>)      <span class="t-com"># SN 1054, the Crab, Taurus</span>
+<span class="t-fn">print</span>(rec.source)                    <span class="t-com"># 'Song Shi, Astronomical Treatise'</span>
+<span class="t-fn">print</span>(rec.cross_id, rec.confidence)  <span class="t-com"># 'Crab Nebula (M1)' 'secure'</span>
+
+<span class="t-com"># 2. render it to sound with the record's declared mapping</span>
+audio = xj.sonify(rec)                <span class="t-com"># -&gt; Audio(samplerate=44100, stereo)</span>
+
+<span class="t-com"># 3. write the file and the two-panel plate</span>
+audio.write(<span class="t-str">"sn1054.wav"</span>)
+xj.plot(rec, audio).savefig(<span class="t-str">"sn1054.png"</span>, dpi=<span class="t-num">150</span>)</pre>
+      </div>
+      <p>That is the whole loop: load a record, render it, write it. To sonify your own data instead of a curated record, build a <code>LightCurve</code> or a <code>SkyPath</code> and pass it to a <code>Sonifier</code> you configure. The <a href="tutorial.html">tutorial</a> walks through three worked examples, and the <a href="mapping.html">mapping model</a> documents every rule and parameter.</p>
+
+      <h2 id="batch">Render the whole gallery at once</h2>
+      <p>New in the 1.x line: iterate the archive and render every record with its declared mapping. This is the command that regenerates the <a href="gallery.html">gallery</a>.</p>
+      <div class="code">
+        <div class="code__label"><span>build_gallery.py</span><span>python</span></div>
+        <pre><span class="t-kw">import</span> xuanji <span class="t-kw">as</span> xj
+
+<span class="t-kw">for</span> rec <span class="t-kw">in</span> xj.records():
+    audio = xj.sonify(rec)
+    audio.write(<span class="t-str">f"out/{rec.id}.flac"</span>)
+    xj.plot(rec, audio).savefig(<span class="t-str">f"out/{rec.id}.png"</span>, dpi=<span class="t-num">150</span>)
+    <span class="t-fn">print</span>(rec.id, rec.cross_id, rec.confidence)</pre>
+      </div>
+
+      <div class="note">
+        <span class="note__k">What it does not do</span>
+        Xuanji never invents data between your samples and never adds notes that are not in the record. If a night is missing from the source, it is missing from the sound. That is the point.
+      </div>
+
+      <p style="margin-top:2rem"><a href="tutorial.html">Next: the tutorial, three worked examples &rarr;</a></p>
+    </div>
+  </main>
+
+  <nav class="docs__toc" aria-label="On this page">
+    <p class="toc-h">On this page</p>
+    <ul class="toc-list">
+      <li><a href="#requirements">Requirements</a></li>
+      <li><a href="#install">Install</a></li>
+      <li><a href="#verify">Verify the install</a></li>
+      <li><a href="#quickstart">Quickstart</a></li>
+      <li><a href="#batch">Render the gallery</a></li>
+    </ul>
+  </nav>
+</div>
+
+<footer class="foot">
+  <div class="foot__strip" role="presentation"></div>
+  <div class="foot__cols">
+    <div class="foot__id">
+      <img class="foot__logo" src="../assets/img/logo/logo-dark.svg" alt="Xuanji">
+      <p>An open-source engine that renders historical astronomical records as sound. Created by Aiden Yeoh and maintained by the Xuanji contributors. Built on Astropy and the scientific-Python stack.</p>
+    </div>
+    <div>
+      <h5>Docs</h5>
+      <ul>
+        <li><a href="index.html">Overview</a></li>
+        <li><a href="install.html">Install &amp; quickstart</a></li>
+        <li><a href="tutorial.html">Tutorial</a></li>
+        <li><a href="mapping.html">Mapping model &amp; API</a></li>
+        <li><a href="gallery.html">Audio gallery</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5>Community</h5>
+      <ul>
+        <li><a href="https://github.com/xuanji-project/xuanji" rel="external">Source (GitHub)</a></li>
+        <li><a href="https://github.com/xuanji-project/xuanji/blob/main/CONTRIBUTING.md" rel="external">Contributing</a></li>
+        <li><a href="gallery.html#contribute">Contribute a record</a></li>
+        <li><a href="changelog.html">Changelog</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5>Cite</h5>
+      <ul>
+        <li>Yeoh, A. et al. (2026). <em>Xuanji</em>. <em>JOSS</em>, 11(118), 6842.</li>
+        <li><a href="https://doi.org/10.21105/joss.06842" rel="external">JOSS DOI</a></li>
+        <li><a href="cite.html">BibTeX &amp; Zenodo</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot__base">
+    <span><img class="foot__seal" src="../assets/img/logo/logo-mono.svg" alt="">Xuanji &middot; 璇玑 &middot; a jade tube for regulating the sky</span>
+    <span>Nebula and remnant imagery: NASA / ESA / CXC, public domain. Charts: British Library and Wikimedia Commons.</span>
+  </div>
+</footer>
+
+<script src="../assets/js/xuanji.js"></script>

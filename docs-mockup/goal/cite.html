@@ -1,0 +1,221 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How to cite, Xuanji</title>
+<meta name="description" content="How to cite the Xuanji sonification library: the peer-reviewed JOSS paper, a formatted reference, BibTeX, and the reserved Zenodo software DOI.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="../assets/img/logo/logo-mono.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=Noto+Serif+SC:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/xuanji-docs.css">
+
+<header class="masthead">
+  <div class="masthead__bar">
+    <a class="brand" href="index.html" aria-label="Xuanji home">
+      <img class="brand__logo" src="../assets/img/logo/logo.svg" alt="Xuanji">
+      <span class="brand__tag">sonification library</span>
+    </a>
+    <span class="pill pill--accent">v1.4.2</span>
+    <nav class="masthead__nav">
+      <a href="index.html">Overview</a>
+      <a href="install.html">Install</a>
+      <a href="tutorial.html">Tutorial</a>
+      <a href="mapping.html">Mapping</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="cite.html" class="is-active">Cite</a>
+      <a href="https://github.com/xuanji-project/xuanji" rel="external">GitHub</a>
+      <span class="pipchip" data-copy="pip install xuanji" data-label="pip install xuanji" title="click to copy"><b>$</b> pip install xuanji</span>
+    </nav>
+  </div>
+</header>
+<div class="score-strip" role="presentation"></div>
+
+<div class="docs">
+  <aside class="docs__side">
+    <button class="menu-toggle" aria-label="Toggle navigation">
+      <svg class="glyph" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg> Contents
+    </button>
+    <div class="nav-groups">
+      <div class="nav-group">
+        <p class="nav-group__h">Getting started</p>
+        <ul class="nav-list">
+          <li><a href="index.html">Overview</a></li>
+          <li><a href="install.html">Install &amp; quickstart</a></li>
+        </ul>
+      </div>
+      <div class="nav-group">
+        <p class="nav-group__h">Guides</p>
+        <ul class="nav-list">
+          <li><a href="tutorial.html">Tutorial</a></li>
+          <li><a href="mapping.html">Mapping model</a></li>
+          <li><a href="mapping.html#api">API reference</a></li>
+          <li><a href="gallery.html">Audio gallery</a></li>
+        </ul>
+      </div>
+      <div class="nav-group">
+        <p class="nav-group__h">Project</p>
+        <ul class="nav-list">
+          <li><a href="cite.html" class="is-active">How to cite</a></li>
+          <li><a href="changelog.html">Changelog</a></li>
+          <li><a href="gallery.html#contribute">Contribute a record</a></li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+  <main class="docs__main">
+    <div class="page-head">
+      <p class="crumb">Project / How to cite</p>
+      <h1>How to cite Xuanji</h1>
+      <p class="sub">If Xuanji helped your teaching, your outreach, or your research, please cite it. Cite the peer-reviewed paper for the method, and the versioned software DOI for the exact code you ran. Both are below, formatted and ready to paste.</p>
+    </div>
+
+    <div class="prose">
+      <h2 id="paper">Cite the paper</h2>
+      <p>The library and its method are described in a short, peer-reviewed paper in the <em>Journal of Open Source Software</em>. This is the citation to use when you refer to Xuanji in a methods section, a syllabus, or a talk.</p>
+
+      <div class="code">
+        <div class="code__label"><span>reference</span><span>APA</span></div>
+        <pre>Yeoh, A., Okonkwo, M., Ramanathan, D., Halvorsen, S., Meng, L., &amp;
+Balasubramanian, P. (2026). Xuanji: sonification of historical
+astronomical records. Journal of Open Source Software, 11(118), 6842.
+https://doi.org/10.21105/joss.06842</pre>
+      </div>
+
+      <div class="code">
+        <div class="code__label"><span>paper.bib</span><span>BibTeX</span></div>
+        <pre>@article{Yeoh2026Xuanji,
+  title   = {Xuanji: sonification of historical astronomical records},
+  author  = {Yeoh, Aiden and Okonkwo, Maya and Ramanathan, Dev
+             and Halvorsen, Sofia and Meng, Lucas
+             and Balasubramanian, Priya},
+  journal = {Journal of Open Source Software},
+  year    = {2026},
+  volume  = {11},
+  number  = {118},
+  pages   = {6842},
+  doi     = {10.21105/joss.06842},
+  url     = {https://doi.org/10.21105/joss.06842}
+}</pre>
+      </div>
+
+      <div class="note">
+        <span class="note__k">Authorship</span>
+        Xuanji is authored by Aiden Yeoh and its volunteer contributors. The paper's author list matches the maintainer credits on the <a href="index.html#contributors">overview</a>. No advisor or endorser is named; the review seat is open.
+      </div>
+
+      <div class="score-strip score-strip--section" role="presentation"></div>
+
+      <h2 id="software">Cite the software version</h2>
+      <p>For reproducibility, cite the exact release you ran, not just the paper. Every tagged release is archived on Zenodo and gets its own DOI; a concept DOI resolves to the latest version. The DOIs below are <strong>reserved</strong> and activate on first public deposit.</p>
+
+      <table class="apitable">
+        <thead><tr><th>What it points to</th><th>DOI</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>All versions (concept)</td><td><code>10.5281/zenodo.7724010</code></td><td>reserved</td></tr>
+          <tr><td>v1.4.2 (this release)</td><td><code>10.5281/zenodo.7724011</code></td><td>reserved</td></tr>
+        </tbody>
+      </table>
+
+      <div class="code">
+        <div class="code__label"><span>software.bib</span><span>BibTeX</span></div>
+        <pre>@software{Yeoh2026XuanjiSoftware,
+  title     = {Xuanji: a sonification engine for historical
+               astronomical records},
+  author    = {Yeoh, Aiden and {The Xuanji contributors}},
+  year      = {2026},
+  version   = {1.4.2},
+  publisher = {Zenodo},
+  doi       = {10.5281/zenodo.7724011},
+  url       = {https://github.com/xuanji-project/xuanji},
+  note      = {DOI reserved; activates on public deposit}
+}</pre>
+      </div>
+
+      <p>Xuanji also ships a <code>CITATION.cff</code> file, so GitHub and Zenodo can build the citation for you, and reference managers can import it directly.</p>
+      <div class="code">
+        <div class="code__label"><span>python</span><span>get the citation in code</span></div>
+        <pre><span class="t-kw">import</span> xuanji <span class="t-kw">as</span> xj
+<span class="t-fn">print</span>(xj.citation())        <span class="t-com"># formatted reference</span>
+<span class="t-fn">print</span>(xj.citation(<span class="t-str">"bibtex"</span>))  <span class="t-com"># the BibTeX above</span></pre>
+      </div>
+
+      <div class="score-strip score-strip--section" role="presentation"></div>
+
+      <h2 id="records">Citing an individual record</h2>
+      <p>Xuanji plays records; it does not author them. When you cite a sonification, cite the library for the method <em>and</em> the record's own primary source for the observation. Each curated record carries its citation with it.</p>
+      <div class="code">
+        <div class="code__label"><span>python</span><span>a record's own source</span></div>
+        <pre>rec = xj.from_record(<span class="t-str">"XJ-1054"</span>)
+<span class="t-fn">print</span>(rec.source)      <span class="t-com"># 'Song Shi, Astronomical Treatise'</span>
+<span class="t-fn">print</span>(rec.cross_id)    <span class="t-com"># 'Crab Nebula (M1), Taurus'</span>
+<span class="t-fn">print</span>(rec.confidence)  <span class="t-com"># 'secure'</span>
+<span class="t-fn">print</span>(rec.cite())      <span class="t-com"># source + archive DOI, formatted</span></pre>
+      </div>
+      <p>The records themselves live in the sibling <strong>Xuanji Archive</strong>, which carries its own Zenodo deposit and per-record citations. If your work leans on a specific record's cross-identification, cite the archive as well as this library.</p>
+
+      <div class="note note--warn">
+        <span class="note__k">One line, honestly</span>
+        "Rendered with Xuanji v1.4.2 (Yeoh et al., 2026) from the record's primary source; the identification is graded <em>secure</em>." That single sentence names the tool, the version, the paper, and the confidence, which is everything a reader needs to check you.
+      </div>
+
+      <p style="margin-top:2rem"><a href="changelog.html">Next: the changelog, every version and DOI &rarr;</a></p>
+
+      <p class="prose" style="font-family:var(--mono);font-size:.72rem;color:var(--ink-soft);border-top:1px solid var(--rule);padding-top:12px;margin-top:2.4rem">
+        Demonstration note: this is an illustrative sample build authored by Aiden Yeoh. The co-contributor names shown in the author lists are fictional stand-ins for a future team, and the JOSS and Zenodo identifiers are reserved placeholders. The full disclosure of what is real and what is aspirational lives in <a href="../provenance.md">provenance.md</a>, not on this page.
+      </p>
+    </div>
+  </main>
+
+  <nav class="docs__toc" aria-label="On this page">
+    <p class="toc-h">On this page</p>
+    <ul class="toc-list">
+      <li><a href="#paper">Cite the paper</a></li>
+      <li><a href="#software">Cite the software version</a></li>
+      <li><a href="#records">Citing a record</a></li>
+    </ul>
+  </nav>
+</div>
+
+<footer class="foot">
+  <div class="foot__strip" role="presentation"></div>
+  <div class="foot__cols">
+    <div class="foot__id">
+      <img class="foot__logo" src="../assets/img/logo/logo-dark.svg" alt="Xuanji">
+      <p>An open-source engine that renders historical astronomical records as sound. Created by Aiden Yeoh and maintained by the Xuanji contributors. Built on Astropy and the scientific-Python stack.</p>
+    </div>
+    <div>
+      <h5>Docs</h5>
+      <ul>
+        <li><a href="index.html">Overview</a></li>
+        <li><a href="install.html">Install &amp; quickstart</a></li>
+        <li><a href="tutorial.html">Tutorial</a></li>
+        <li><a href="mapping.html">Mapping model &amp; API</a></li>
+        <li><a href="gallery.html">Audio gallery</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5>Community</h5>
+      <ul>
+        <li><a href="https://github.com/xuanji-project/xuanji" rel="external">Source (GitHub)</a></li>
+        <li><a href="https://github.com/xuanji-project/xuanji/blob/main/CONTRIBUTING.md" rel="external">Contributing</a></li>
+        <li><a href="gallery.html#contribute">Contribute a record</a></li>
+        <li><a href="changelog.html">Changelog</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5>Cite</h5>
+      <ul>
+        <li>Yeoh, A. et al. (2026). <em>Xuanji</em>. <em>JOSS</em>, 11(118), 6842.</li>
+        <li><a href="https://doi.org/10.21105/joss.06842" rel="external">JOSS DOI</a></li>
+        <li><a href="cite.html">BibTeX &amp; Zenodo</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot__base">
+    <span><img class="foot__seal" src="../assets/img/logo/logo-mono.svg" alt="">Xuanji &middot; 璇玑 &middot; a jade tube for regulating the sky</span>
+    <span>Nebula and remnant imagery: NASA / ESA / CXC, public domain. Charts: British Library and Wikimedia Commons. See IMAGE-CREDITS.</span>
+  </div>
+</footer>
+
+<script src="../assets/js/xuanji.js"></script>

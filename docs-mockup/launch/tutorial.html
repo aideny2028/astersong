@@ -1,0 +1,219 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tutorial, Xuanji</title>
+<meta name="description" content="Three worked examples: a Kepler transit, the pulsation of delta Cephei, and the reconstructed light curve of SN 1054, each rendered as sound.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="../assets/img/logo/logo-mono.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=Noto+Serif+SC:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/xuanji-docs.css">
+
+<header class="masthead">
+  <div class="masthead__bar">
+    <a class="brand" href="index.html" aria-label="Xuanji home">
+      <img class="brand__logo" src="../assets/img/logo/logo.svg" alt="Xuanji">
+      <span class="brand__tag">sonification library</span>
+    </a>
+    <span class="pill pill--accent">v0.3.1</span>
+    <nav class="masthead__nav">
+      <a href="index.html">Overview</a>
+      <a href="install.html">Install</a>
+      <a href="tutorial.html" class="is-active">Tutorial</a>
+      <a href="mapping.html">Mapping</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="https://github.com/xuanji-project/xuanji" rel="external">GitHub</a>
+      <span class="pipchip" data-copy="pip install xuanji" data-label="pip install xuanji" title="click to copy"><b>$</b> pip install xuanji</span>
+    </nav>
+  </div>
+</header>
+<div class="score-strip" role="presentation"></div>
+
+<div class="docs">
+  <aside class="docs__side">
+    <button class="menu-toggle" aria-label="Toggle navigation">
+      <svg class="glyph" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg> Contents
+    </button>
+    <div class="nav-groups">
+      <div class="nav-group">
+        <p class="nav-group__h">Getting started</p>
+        <ul class="nav-list">
+          <li><a href="index.html">Overview</a></li>
+          <li><a href="install.html">Install &amp; quickstart</a></li>
+        </ul>
+      </div>
+      <div class="nav-group">
+        <p class="nav-group__h">Guides</p>
+        <ul class="nav-list">
+          <li><a href="tutorial.html" class="is-active">Tutorial</a></li>
+          <li><a href="mapping.html">Mapping model</a></li>
+          <li><a href="mapping.html#api">API reference</a></li>
+          <li><a href="gallery.html">Audio gallery</a></li>
+        </ul>
+      </div>
+      <div class="nav-group">
+        <p class="nav-group__h">In this tutorial</p>
+        <ul class="nav-list">
+          <li><a href="#ex1">1. A Kepler transit</a></li>
+          <li><a href="#ex2">2. delta Cephei</a></li>
+          <li><a href="#ex3">3. SN 1054</a></li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+  <main class="docs__main">
+    <div class="page-head">
+      <p class="crumb">Guides / Tutorial</p>
+      <h1>Three light curves, three sounds</h1>
+      <p class="sub">We start on modern, quantitative data, a transit and a pulsating star, so the mapping is easy to check against something you already trust. Then we apply exactly the same code to a thousand-year-old record.</p>
+    </div>
+
+    <div class="prose">
+      <p>Every example follows the same three steps: build a <code>LightCurve</code>, configure a <code>Sonifier</code>, call <code>render</code>. Nothing about the historical record needs special handling; it is a light curve like any other, with wider error bars. That is the argument the library is built to make.</p>
+
+      <div class="note">
+        <span class="note__k">Before you start</span>
+        Install the audio extra: <code>pip install "xuanji[audio]"</code>. Each snippet is self-contained and writes a <code>.wav</code> next to a <code>.png</code> plate. The players below are the rendered output.
+      </div>
+
+      <h2 id="ex1">1. A Kepler transit, brightness to pitch</h2>
+      <p>A planet crossing its star dims the star by a fraction of a percent, twice here, once per orbit. On a plot it is a shallow notch. Mapped to pitch, the dip is a clean downward bend you cannot miss.</p>
+      <div class="code">
+        <div class="code__label"><span>example_1_transit.py</span><span>python</span></div>
+        <pre><span class="t-kw">import</span> xuanji <span class="t-kw">as</span> xj
+<span class="t-kw">from</span> astropy.io <span class="t-kw">import</span> fits
+
+<span class="t-com"># a detrended Kepler light curve (time in days, normalized flux), from MAST</span>
+t, flux = xj.data.load_kepler(<span class="t-str">"kplr-011446443"</span>)
+
+lc = xj.LightCurve(times=t, flux=flux, label=<span class="t-str">"Kepler transit"</span>)
+
+son = xj.Sonifier(
+    pitch=xj.BrightnessToPitch(f_lo=<span class="t-num">220</span>, f_hi=<span class="t-num">1760</span>, scale=<span class="t-str">"flux"</span>),
+    tempo=xj.TimeToTempo(seconds=<span class="t-num">13</span>),
+)
+audio = son.render(lc)
+audio.write(<span class="t-str">"transit.wav"</span>)
+xj.plot(lc, audio).savefig(<span class="t-str">"transit.png"</span>, dpi=<span class="t-num">150</span>)</pre>
+      </div>
+      <div class="featured__fig" style="max-width:none">
+        <img src="../assets/img/fig/t_transit.png" alt="Waveform and spectrogram of a Kepler transit sonification, showing two brief downward pitch bends where the planet crosses the star">
+        <p class="plate-cap"><span class="accent">plate</span> &middot; two transits appear as two sharp downward glides. Brightness maps to pitch; nothing else moves.</p>
+      </div>
+      <div class="audio-wrap"><div class="al"><span>transit.wav</span><span>brightness &rarr; pitch</span></div><audio controls preload="none" src="../assets/audio/t_transit.mp3"></audio></div>
+      <p><b>What you hear.</b> A steady tone at the star's baseline brightness, interrupted twice by a fast dip and recovery. The two dips sit at the orbital period. The depth of the bend is the transit depth, so a deeper planet would drop the pitch further.</p>
+
+      <h2 id="ex2">2. delta Cephei, a periodic signal folded to tempo</h2>
+      <p>Cepheid variables pulse on a fixed clock. delta Cephei has a period of 5.366 days. Its brightness rises fast and falls slow, the classic sawtooth. Sonified, the period is audible as a repeating swell, and <code>TimeToTempo</code> lets you set how many cycles land in the clip.</p>
+      <div class="code">
+        <div class="code__label"><span>example_2_cepheid.py</span><span>python</span></div>
+        <pre><span class="t-kw">import</span> xuanji <span class="t-kw">as</span> xj
+
+<span class="t-com"># visual magnitudes for delta Cephei, phase-folded, from the AAVSO archive</span>
+t, mag = xj.data.load_aavso(<span class="t-str">"delta-cep"</span>)
+
+lc  = xj.LightCurve(times=t, mags=mag, label=<span class="t-str">"delta Cephei"</span>, period=<span class="t-num">5.366</span>)
+son = xj.Sonifier(
+    pitch=xj.BrightnessToPitch(f_lo=<span class="t-num">180</span>, f_hi=<span class="t-num">1400</span>),  <span class="t-com"># magnitudes: brighter -&gt; higher</span>
+    tempo=xj.TimeToTempo(cycles=<span class="t-num">3</span>),                  <span class="t-com"># play three pulsation periods</span>
+)
+audio = son.render(lc)
+audio.write(<span class="t-str">"cepheid.wav"</span>)</pre>
+      </div>
+      <div class="featured__fig" style="max-width:none">
+        <img src="../assets/img/fig/t_cepheid.png" alt="Waveform and spectrogram of the delta Cephei sonification, showing three repeated rise-and-fall pulses">
+        <p class="plate-cap"><span class="accent">plate</span> &middot; three pulsation cycles of delta Cephei (P = 5.366 d). The fast rise and slow fall are audible in the pitch envelope.</p>
+      </div>
+      <div class="audio-wrap"><div class="al"><span>cepheid.wav</span><span>period folded to tempo</span></div><audio controls preload="none" src="../assets/audio/t_cepheid.mp3"></audio></div>
+      <p><b>What you hear.</b> Three identical swells. Because magnitude is inverted (a smaller number is brighter), <code>BrightnessToPitch</code> flips it for you, so maximum light is the top of each swell. The regularity is the science: a Cepheid's period fixes its luminosity, which is how these stars measure distance.</p>
+
+      <div class="score-strip score-strip--section" role="presentation"></div>
+
+      <h2 id="ex3">3. SN 1054, the same code on a historical record</h2>
+      <p>Now the point of the whole library. A Song-dynasty treatise records a guest star near Tianguan from July 1054, bright enough to see in daylight for about 23 days, fading over roughly two years. There is no photometry from 1054, only text: a handful of dated brightness descriptions. We reconstruct a coarse light curve from those descriptions and carry the date uncertainty explicitly.</p>
+      <div class="code">
+        <div class="code__label"><span>example_3_sn1054.py</span><span>python</span></div>
+        <pre><span class="t-kw">import</span> xuanji <span class="t-kw">as</span> xj
+
+<span class="t-com"># a coarse light curve reconstructed from dated brightness phrases</span>
+<span class="t-com"># in the Song Shi treatise; date_sigma is the uncertainty on each note, in days</span>
+rec = xj.from_record(<span class="t-str">"XJ-1054"</span>)
+lc  = rec.light_curve()            <span class="t-com"># times, mags, and per-point date_sigma</span>
+
+son = xj.Sonifier(
+    pitch=xj.BrightnessToPitch(f_lo=<span class="t-num">110</span>, f_hi=<span class="t-num">1760</span>),
+    tempo=xj.TimeToTempo(seconds=<span class="t-num">22</span>),          <span class="t-com"># ~2 years -&gt; 22 s</span>
+    stereo=xj.PositionToStereo(coords=rec.coords),  <span class="t-com"># place it at Tianguan</span>
+)
+audio = son.render(lc, jitter=<span class="t-str">"date_sigma"</span>)  <span class="t-com"># widen onsets by the uncertainty</span>
+audio.write(<span class="t-str">"sn1054.wav"</span>)
+xj.plot(lc, audio).savefig(<span class="t-str">"sn1054.png"</span>, dpi=<span class="t-num">150</span>)</pre>
+      </div>
+      <div class="featured__fig" style="max-width:none">
+        <img src="../assets/img/fig/t_sn1054.png" alt="Waveform and spectrogram of the reconstructed SN 1054 light curve, showing a bright onset and a long stepped decline in pitch">
+        <p class="plate-cap"><span class="accent">plate</span> &middot; reconstructed SN 1054 decline. The stepped fall is the coarse, dated brightness notes; the softened onsets are the date uncertainty made audible.</p>
+      </div>
+      <div class="audio-wrap"><div class="al"><span>sn1054.wav</span><span>reconstruction, uncertainty carried</span></div><audio controls preload="none" src="../assets/audio/t_sn1054.mp3"></audio></div>
+      <p><b>What you hear.</b> A bright, high onset, a plateau while it was a daytime object, then a long stepped descent as it faded from the night sky. The steps are honest: they are exactly as coarse as the record, no smoother. Where a date is uncertain, the note's start is blurred rather than sharpened, so the sound never claims more precision than the source has.</p>
+      <div class="note note--warn">
+        <span class="note__k">The epistemic move</span>
+        The transit and the Cepheid gave you a mapping you could trust. Example 3 runs that identical mapping on a text record from 1054. The reconstruction is a hypothesis about the brightness history, cross-identified to the Crab in Taurus, and the audio wears its uncertainty on its sleeve. That is what it means to treat a historical note as data.
+      </div>
+
+      <p style="margin-top:2rem"><a href="mapping.html">Next: the mapping model and full API &rarr;</a></p>
+    </div>
+  </main>
+
+  <nav class="docs__toc" aria-label="On this page">
+    <p class="toc-h">On this page</p>
+    <ul class="toc-list">
+      <li><a href="#ex1">1. A Kepler transit</a></li>
+      <li><a href="#ex2">2. delta Cephei</a></li>
+      <li><a href="#ex3">3. SN 1054</a></li>
+    </ul>
+  </nav>
+</div>
+
+<footer class="foot">
+  <div class="foot__strip" role="presentation"></div>
+  <div class="foot__cols">
+    <div class="foot__id">
+      <img class="foot__logo" src="../assets/img/logo/logo-dark.svg" alt="Xuanji">
+      <p>An open-source engine that renders historical astronomical records as sound. Author and maintainer: Aiden Yeoh. Built on Astropy and the scientific-Python stack.</p>
+    </div>
+    <div>
+      <h5>Docs</h5>
+      <ul>
+        <li><a href="index.html">Overview</a></li>
+        <li><a href="install.html">Install &amp; quickstart</a></li>
+        <li><a href="tutorial.html">Tutorial</a></li>
+        <li><a href="mapping.html">Mapping model &amp; API</a></li>
+        <li><a href="gallery.html">Audio gallery</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5>Project</h5>
+      <ul>
+        <li><a href="https://github.com/xuanji-project/xuanji" rel="external">Source (GitHub)</a></li>
+        <li><a href="install.html#changelog">Changelog</a></li>
+        <li><a href="gallery.html#contribute">Contribute a record</a></li>
+        <li><a href="index.html#cite">How to cite</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5>Cite</h5>
+      <ul>
+        <li>Yeoh, A. (2026). <em>Xuanji</em> (v0.3.1) [software].</li>
+        <li><a href="https://doi.org/10.5281/zenodo.reserved" rel="external">Zenodo DOI (reserved)</a></li>
+        <li><small>JOSS paper in preparation</small></li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot__base">
+    <span><img class="foot__seal" src="../assets/img/logo/logo-mono.svg" alt="">Xuanji &middot; 璇玑 &middot; a jade tube for regulating the sky</span>
+    <span>Light-curve data: NASA Kepler / MAST and the AAVSO International Database. See IMAGE-CREDITS and provenance.</span>
+  </div>
+</footer>
+
+<script src="../assets/js/xuanji.js"></script>

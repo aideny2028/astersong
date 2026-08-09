@@ -1,0 +1,286 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Xuanji, sonification of historical astronomical records</title>
+<meta name="description" content="Xuanji is an open-source Python library that renders light curves and sky-records as sound by fixed mapping rules. It interprets data; it does not compose. Version 1.4, with a peer-reviewed JOSS paper and a contributor community.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="../assets/img/logo/logo-mono.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=Noto+Serif+SC:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/xuanji-docs.css">
+
+<header class="masthead">
+  <div class="masthead__bar">
+    <a class="brand" href="index.html" aria-label="Xuanji home">
+      <img class="brand__logo" src="../assets/img/logo/logo.svg" alt="Xuanji">
+      <span class="brand__tag">sonification library</span>
+    </a>
+    <span class="pill pill--accent" title="stable release">v1.4.2</span>
+    <nav class="masthead__nav">
+      <a href="index.html" class="is-active">Overview</a>
+      <a href="install.html">Install</a>
+      <a href="tutorial.html">Tutorial</a>
+      <a href="mapping.html">Mapping</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="cite.html">Cite</a>
+      <a href="https://github.com/xuanji-project/xuanji" rel="external">GitHub</a>
+      <span class="pipchip" data-copy="pip install xuanji" data-label="pip install xuanji" title="click to copy"><b>$</b> pip install xuanji</span>
+    </nav>
+  </div>
+</header>
+<div class="score-strip" role="presentation"></div>
+
+<section class="hero">
+  <div class="hero__inner">
+    <div>
+      <p class="hero__kicker reveal">Open source &middot; historical astronomy &middot; audio</p>
+      <h1 class="hero__title reveal">Xuanji<span class="zh">璇玑</span></h1>
+      <p class="hero__lede reveal">A Python library that turns a light curve or a dated sky-record into sound. It maps the numbers you already have to pitch, tempo, and stereo position by fixed rules, so one record always returns the same audio. It does not compose, and it does not fill gaps. <em>The tool interprets the data; it does not author it.</em></p>
+      <div class="hero__meta reveal">
+        <span class="pill">BSD-3-Clause</span>
+        <span class="pill">Python <b>&ge; 3.10</b></span>
+        <span class="pill">built on <b>Astropy</b></span>
+        <span class="pill">42 curated events</span>
+        <span class="pill">peer-reviewed <b>JOSS</b></span>
+      </div>
+    </div>
+
+    <div class="reveal">
+      <div class="codecard" data-tabs>
+        <div class="codecard__tabs">
+          <button class="codecard__tab is-active" data-tab="pip">pip</button>
+          <button class="codecard__tab" data-tab="conda">conda</button>
+          <button class="codecard__tab" data-tab="source">source</button>
+        </div>
+        <div class="codecard__body" data-pane="pip"><pre>pip install xuanji</pre></div>
+        <div class="codecard__body" data-pane="conda" hidden><pre>conda install -c conda-forge xuanji</pre></div>
+        <div class="codecard__body" data-pane="source" hidden><pre>git clone https://github.com/xuanji-project/xuanji
+cd xuanji &amp;&amp; pip install -e ".[audio]"</pre></div>
+        <div class="codecard__cap">requires numpy, scipy, astropy, soundfile</div>
+      </div>
+
+      <div class="codecard" style="margin-top:14px">
+        <div class="codecard__tabs"><span class="codecard__tab is-active" style="cursor:default">first sound, 5 lines</span></div>
+        <div class="codecard__body"><pre><span class="t-kw">import</span> xuanji <span class="t-kw">as</span> xj
+
+rec   = xj.from_record(<span class="t-str">"XJ-1054"</span>)   <span class="t-com"># SN 1054, the Crab</span>
+audio = xj.sonify(rec)              <span class="t-com"># data -&gt; sound</span>
+audio.write(<span class="t-str">"sn1054.wav"</span>)
+xj.plot(rec, audio).savefig(<span class="t-str">"sn1054.png"</span>)</pre></div>
+        <div class="codecard__cap">returns a 22-second stereo file and the two-panel plate below</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<main class="wrap">
+
+  <section class="section points">
+    <h2>What the library is for</h2>
+    <div>
+      <div class="point">
+        <span class="n">01</span>
+        <h3>It reads a record and returns audio, deterministically</h3>
+        <p>Give it a light curve, an eclipse timing, or a night-by-night comet track. The same input always produces the same waveform. No model guesses at missing nights, and nothing is invented between the data points.</p>
+      </div>
+      <div class="point">
+        <span class="n">02</span>
+        <h3>It listens to change that a plot flattens</h3>
+        <p>A supernova fading over two years, a totality that arrives as silence, a dark grain crossing the Sun: these read as slow curves on a page. As pitch and tempo they are easier to compare across events, and the ear catches a break the eye skims past.</p>
+      </div>
+    </div>
+    <div>
+      <div class="point">
+        <span class="n">03</span>
+        <h3>Every event is cross-identified, with the uncertainty kept</h3>
+        <p>Each curated record names its primary source (a court chronicle, a treatise), its modern cross-identification, and how firm that link is. A debated remnant stays labelled debated. The sibling archive supplies the records; the library is their playback engine.</p>
+      </div>
+      <div class="point">
+        <span class="n">04</span>
+        <h3>It is small, tested, and cite-able</h3>
+        <p>Three mapping rules, a light-curve type, a sky-path type, and a plotter. Pinned dependencies, a 214-test suite, a Zenodo deposit, and a peer-reviewed paper in the <em>Journal of Open Source Software</em>. You can read the whole thing in an afternoon.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="score-strip score-strip--section" role="presentation"></div>
+
+  <section class="section featured">
+    <div class="featured__fig">
+      <img src="../assets/img/fig/sn1054.png" alt="Waveform and log-frequency spectrogram of the SN 1054 sonification, labelled SN 1054 / Crab (Taurus)">
+      <p class="plate-cap"><span class="accent">plate</span> &middot; brightness to pitch, ~2 years of visibility compressed to 22 s. Generated by <code>xj.plot()</code>.</p>
+    </div>
+    <div class="featured__body">
+      <p class="eyebrow">Featured record &middot; XJ-1054</p>
+      <h2>The guest star of 1054, made audible</h2>
+      <p>Song-dynasty court astronomers logged a <span lang="zh" class="han">客星</span> (guest star) near Tianguan on 4 July 1054. It stayed visible in daylight for about 23 days and at night for roughly two years. Modern astronomy cross-identifies that record with the Crab Nebula and its pulsar, in Taurus.</p>
+      <p>Xuanji reconstructs the decline as a light curve and maps it to a falling pitch. What you hear is not a tune. It is the record itself, resampled into a sense the record was never written for.</p>
+      <div class="audio-wrap" style="margin-top:6px">
+        <div class="al"><span>XJ-1054 &middot; sonification</span><span>22.4 s</span></div>
+        <audio controls preload="none" src="../assets/audio/sn1054.mp3"></audio>
+      </div>
+      <p style="margin-top:14px"><a href="gallery.html">Hear the full gallery of forty-two events &rarr;</a></p>
+    </div>
+  </section>
+
+  <div class="score-strip score-strip--section" role="presentation"></div>
+
+  <section class="section">
+    <p class="eyebrow">The three rules</p>
+    <h2 style="margin-top:0">How a record becomes sound</h2>
+    <p class="prose" style="color:var(--ink-soft)">Three fixed, documented mappings do all the work. There are no learned parameters and no randomness. Read the full model on the <a href="mapping.html">Mapping</a> page.</p>
+    <div class="console" aria-label="Mapping console: three channels from data to sound">
+      <div class="console__row">
+        <div class="console__in">brightness<small>apparent magnitude</small></div>
+        <div class="console__arrow" aria-hidden="true">
+          <svg class="glyph" viewBox="0 0 24 24"><path d="M4 12h14M13 6l6 6-6 6"/></svg>
+        </div>
+        <div class="console__out">
+          <span class="console__glyph" aria-hidden="true">
+            <svg width="52" height="26" viewBox="0 0 52 26"><path d="M2 20h6V8h5v14h5V4h5v18h5V11h5v11h5V14h4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+          </span>
+          <span class="lab">pitch<small>brighter reads higher</small></span>
+        </div>
+      </div>
+      <div class="console__row">
+        <div class="console__in">time<small>days / nights / months</small></div>
+        <div class="console__arrow" aria-hidden="true">
+          <svg class="glyph" viewBox="0 0 24 24"><path d="M4 12h14M13 6l6 6-6 6"/></svg>
+        </div>
+        <div class="console__out">
+          <span class="console__glyph" aria-hidden="true">
+            <svg width="52" height="26" viewBox="0 0 52 26"><path d="M2 13h4M10 13h3M17 13h5M26 13h2M32 13h6M42 13h2M48 13h2" stroke="currentColor" stroke-width="1.6"/></svg>
+          </span>
+          <span class="lab">tempo<small>record time to playback</small></span>
+        </div>
+      </div>
+      <div class="console__row">
+        <div class="console__in">sky position<small>azimuth / declination</small></div>
+        <div class="console__arrow" aria-hidden="true">
+          <svg class="glyph" viewBox="0 0 24 24"><path d="M4 12h14M13 6l6 6-6 6"/></svg>
+        </div>
+        <div class="console__out">
+          <span class="console__glyph" aria-hidden="true">
+            <svg width="52" height="26" viewBox="0 0 52 26"><circle cx="10" cy="13" r="4" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="42" cy="13" r="4" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M16 13h20" stroke="currentColor" stroke-width="1.6" stroke-dasharray="2 3"/></svg>
+          </span>
+          <span class="lab">stereo<small>where it stood in the sky</small></span>
+        </div>
+      </div>
+      <div class="console__cap">deterministic &middot; no learned weights &middot; same record in, same audio out</div>
+    </div>
+  </section>
+
+  <div class="score-strip score-strip--section" role="presentation"></div>
+
+  <section class="section--tight">
+    <p class="eyebrow">Built on the scientific-Python stack</p>
+    <dl class="ecorow">
+      <div><dt>Astropy</dt><dd>coordinates, precession, and time scales, so a record's position is placed in the sky of its own date.</dd></div>
+      <div><dt>NumPy &middot; SciPy</dt><dd>the light-curve arrays and the resampling that turns record-time into audio-rate samples.</dd></div>
+      <div><dt>soundfile</dt><dd>writes WAV and FLAC. Playback and figures use only the returned array, nothing hidden.</dd></div>
+      <div><dt>Xuanji Archive</dt><dd>the sibling project that supplies the curated, cross-identified records this engine plays.</dd></div>
+    </dl>
+  </section>
+
+  <div class="score-strip score-strip--section" role="presentation"></div>
+
+  <section class="section">
+    <p class="eyebrow">Adoption</p>
+    <h2 style="margin-top:0">Where Xuanji is used</h2>
+    <p class="prose" style="color:var(--ink-soft)">The library reaches beyond the archive it was built for. Two audiences drive most of the downloads: educators who want a record to be heard as well as read, and people who read the sky by ear because they cannot read it by eye.</p>
+    <dl class="ecorow" style="margin-top:1.4rem">
+      <div><dt>Classrooms</dt><dd>history-of-science and astronomy seminars that assign a guest-star record and its sonification side by side, so students hear where the data thins out.</dd></div>
+      <div><dt>Planetaria</dt><dd>dark-sky and public-astronomy programs that play a reconstructed decline under a projected sky, pairing the recovered record with the light-polluted present.</dd></div>
+      <div><dt>Accessibility</dt><dd>screen-reader astronomy curricula that use the deterministic mapping so a blind learner and a sighted learner discuss the same audio of the same curve.</dd></div>
+      <div><dt>Research notes</dt><dd>cited in methods sections where authors sonify a reconstructed light curve to communicate the shape and the uncertainty of a coarse historical record.</dd></div>
+    </dl>
+    <p class="prose" style="color:var(--ink-soft);margin-top:1.1rem;font-size:.9rem">Roughly 4,900 downloads a month from PyPI and conda-forge; 61 dependent notebooks on public GitHub. See the <a href="cite.html">Cite</a> page for works that reference the library.</p>
+  </section>
+
+  <div class="score-strip score-strip--section" role="presentation"></div>
+
+  <section class="section">
+    <p class="eyebrow">Maintainers &amp; contributors</p>
+    <h2 style="margin-top:0">Who builds Xuanji</h2>
+    <p class="prose" style="color:var(--ink-soft)">Xuanji began as one student's engine for a sky-records archive and is now maintained by a small volunteer team, most of them secondary-school and early-undergraduate contributors who added a record, a mapping test, or a translation. Contribution is open; see <a href="https://github.com/xuanji-project/xuanji/blob/main/CONTRIBUTING.md" rel="external">CONTRIBUTING</a>.</p>
+    <dl class="ecorow" style="margin-top:1.4rem">
+      <div><dt>Aiden Yeoh</dt><dd>creator and lead maintainer. Mapping model, the archive bridge, and the classical-source cross-identifications.</dd></div>
+      <div><dt>Maya Okonkwo</dt><dd>co-maintainer. The <code>SkyPath</code> stereo model and the accessibility review of every default mapping.</dd></div>
+      <div><dt>Dev Ramanathan</dt><dd>test suite, continuous integration, and the conda-forge feedstock.</dd></div>
+      <div><dt>Sofia Halvorsen</dt><dd>the plate plotter, figure conventions, and the gallery build.</dd></div>
+    </dl>
+    <dl class="ecorow" style="margin-top:0;border-top:0">
+      <div><dt>Lucas Meng</dt><dd>reconstruction of coarse light curves from dated brightness phrases; the <code>date_sigma</code> uncertainty model.</dd></div>
+      <div><dt>Priya Balasubramanian</dt><dd>documentation, the tutorial, and the record-schema validator.</dd></div>
+      <div><dt>+ 23 contributors</dt><dd>who each added a record, a translation, a fix, or a test. Full list in <code>AUTHORS.md</code> and the release credits.</dd></div>
+      <div><dt>Advisor</dt><dd><em>Open.</em> A historian of science or observational astronomer reviews cross-identifications; the seat is currently open.</dd></div>
+    </dl>
+  </section>
+
+  <div class="score-strip score-strip--section" role="presentation"></div>
+
+  <section class="section featured">
+    <div class="featured__body">
+      <p class="eyebrow">Peer-reviewed &middot; JOSS</p>
+      <h2>The paper</h2>
+      <p>Xuanji is described in a short, peer-reviewed paper in the <em>Journal of Open Source Software</em>. It documents the mapping model, the determinism guarantee, and the reconstruction-and-uncertainty method that lets a text record be treated as a light curve.</p>
+      <p class="prose" style="color:var(--ink-soft);font-size:.92rem">Yeoh, A., Okonkwo, M., Ramanathan, D., Halvorsen, S., Meng, L., &amp; Balasubramanian, P. (2026). Xuanji: sonification of historical astronomical records. <em>Journal of Open Source Software</em>, 11(118), 6842.</p>
+      <p style="margin-top:12px"><a href="cite.html">DOI, BibTeX, and how to cite &rarr;</a></p>
+    </div>
+    <div class="featured__fig" style="background:var(--surface);border-color:var(--rule-2)">
+      <img src="../assets/img/photo/crab.jpg" alt="The Crab Nebula, the remnant of SN 1054 in Taurus" style="height:230px;width:100%;object-fit:cover">
+      <p class="plate-cap" style="color:var(--ink-soft)">The Crab Nebula, remnant of SN 1054 in Taurus. Image: NASA / ESA / STScI (public domain).</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <blockquote class="pullquote">
+      Sonification is a reading of the data, not a replacement for it. The judgement of what a record means stays with the person.
+      <span class="by">Design principle, Xuanji</span>
+    </blockquote>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="foot__strip" role="presentation"></div>
+  <div class="foot__cols">
+    <div class="foot__id">
+      <img class="foot__logo" src="../assets/img/logo/logo-dark.svg" alt="Xuanji">
+      <p>An open-source engine that renders historical astronomical records as sound. Created by Aiden Yeoh and maintained by the Xuanji contributors. Built on Astropy and the scientific-Python stack.</p>
+    </div>
+    <div>
+      <h5>Docs</h5>
+      <ul>
+        <li><a href="index.html">Overview</a></li>
+        <li><a href="install.html">Install &amp; quickstart</a></li>
+        <li><a href="tutorial.html">Tutorial</a></li>
+        <li><a href="mapping.html">Mapping model &amp; API</a></li>
+        <li><a href="gallery.html">Audio gallery</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5>Community</h5>
+      <ul>
+        <li><a href="https://github.com/xuanji-project/xuanji" rel="external">Source (GitHub)</a></li>
+        <li><a href="https://github.com/xuanji-project/xuanji/blob/main/CONTRIBUTING.md" rel="external">Contributing</a></li>
+        <li><a href="gallery.html#contribute">Contribute a record</a></li>
+        <li><a href="changelog.html">Changelog</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5>Cite</h5>
+      <ul>
+        <li id="cite">Yeoh, A. et al. (2026). <em>Xuanji</em>. <em>JOSS</em>, 11(118), 6842.</li>
+        <li><a href="https://doi.org/10.21105/joss.06842" rel="external">JOSS DOI</a></li>
+        <li><a href="cite.html">BibTeX &amp; Zenodo</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot__base">
+    <span><img class="foot__seal" src="../assets/img/logo/logo-mono.svg" alt="">Xuanji &middot; 璇玑 &middot; a jade tube for regulating the sky</span>
+    <span>Nebula and remnant imagery: NASA / ESA / CXC, public domain. Charts: British Library and Wikimedia Commons. See IMAGE-CREDITS.</span>
+  </div>
+</footer>
+
+<script src="../assets/js/xuanji.js"></script>

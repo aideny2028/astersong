@@ -1,0 +1,244 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mapping model &amp; API, Xuanji</title>
+<meta name="description" content="The three fixed mapping rules that turn a record into sound, and the API reference for the Xuanji sonification library, v0.3.1.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="../assets/img/logo/logo-mono.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=Noto+Serif+SC:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/xuanji-docs.css">
+
+<header class="masthead">
+  <div class="masthead__bar">
+    <a class="brand" href="index.html" aria-label="Xuanji home">
+      <img class="brand__logo" src="../assets/img/logo/logo.svg" alt="Xuanji">
+      <span class="brand__tag">sonification library</span>
+    </a>
+    <span class="pill pill--accent" title="pre-1.0 public release">v0.3.1</span>
+    <nav class="masthead__nav">
+      <a href="index.html">Overview</a>
+      <a href="install.html">Install</a>
+      <a href="tutorial.html">Tutorial</a>
+      <a href="mapping.html" class="is-active">Mapping</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="https://github.com/xuanji-project/xuanji" rel="external">GitHub</a>
+      <span class="pipchip" data-copy="pip install xuanji" data-label="pip install xuanji" title="click to copy"><b>$</b> pip install xuanji</span>
+    </nav>
+  </div>
+</header>
+<div class="score-strip" role="presentation"></div>
+
+<div class="docs">
+  <aside class="docs__side">
+    <button class="menu-toggle" aria-label="Toggle navigation">
+      <svg class="glyph" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg> Contents
+    </button>
+    <div class="nav-groups">
+      <div class="nav-group">
+        <p class="nav-group__h">Getting started</p>
+        <ul class="nav-list">
+          <li><a href="index.html">Overview</a></li>
+          <li><a href="install.html">Install &amp; quickstart</a></li>
+        </ul>
+      </div>
+      <div class="nav-group">
+        <p class="nav-group__h">Guides</p>
+        <ul class="nav-list">
+          <li><a href="tutorial.html">Tutorial</a></li>
+          <li><a href="mapping.html" class="is-active">Mapping model</a></li>
+          <li><a href="mapping.html#api">API reference</a></li>
+          <li><a href="gallery.html">Audio gallery</a></li>
+        </ul>
+      </div>
+      <div class="nav-group">
+        <p class="nav-group__h">Project</p>
+        <ul class="nav-list">
+          <li><a href="install.html#changelog">Changelog</a></li>
+          <li><a href="index.html#cite">How to cite</a></li>
+          <li><a href="gallery.html#contribute">Contribute a record</a></li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+  <main class="docs__main">
+    <div class="page-head">
+      <p class="crumb">Guides / Mapping model</p>
+      <h1>The mapping model</h1>
+      <p class="sub">Three fixed rules turn a record into sound. They are documented, deterministic, and free of learned parameters: the same record and the same rules always return the same audio. This page specifies each rule, then gives the API reference for the v0.3.1 surface.</p>
+    </div>
+
+    <div class="prose">
+      <p>A sonification is only honest if you can say exactly how the numbers became the sound, and get the same sound back tomorrow. Xuanji fixes three channels. Nothing else touches the audio, and nothing is learned or tuned per record.</p>
+
+      <div class="console" aria-label="Mapping console: three channels from data to sound">
+        <div class="console__row">
+          <div class="console__in">brightness<small>apparent magnitude</small></div>
+          <div class="console__arrow" aria-hidden="true"><svg class="glyph" viewBox="0 0 24 24"><path d="M4 12h14M13 6l6 6-6 6"/></svg></div>
+          <div class="console__out">
+            <span class="console__glyph" aria-hidden="true"><svg width="52" height="26" viewBox="0 0 52 26"><path d="M2 20h6V8h5v14h5V4h5v18h5V11h5v11h5V14h4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></span>
+            <span class="lab">pitch<small>brighter reads higher</small></span>
+          </div>
+        </div>
+        <div class="console__row">
+          <div class="console__in">time<small>days / nights / months</small></div>
+          <div class="console__arrow" aria-hidden="true"><svg class="glyph" viewBox="0 0 24 24"><path d="M4 12h14M13 6l6 6-6 6"/></svg></div>
+          <div class="console__out">
+            <span class="console__glyph" aria-hidden="true"><svg width="52" height="26" viewBox="0 0 52 26"><path d="M2 13h4M10 13h3M17 13h5M26 13h2M32 13h6M42 13h2M48 13h2" stroke="currentColor" stroke-width="1.6"/></svg></span>
+            <span class="lab">tempo<small>record time to playback</small></span>
+          </div>
+        </div>
+        <div class="console__row">
+          <div class="console__in">sky position<small>azimuth / declination</small></div>
+          <div class="console__arrow" aria-hidden="true"><svg class="glyph" viewBox="0 0 24 24"><path d="M4 12h14M13 6l6 6-6 6"/></svg></div>
+          <div class="console__out">
+            <span class="console__glyph" aria-hidden="true"><svg width="52" height="26" viewBox="0 0 52 26"><circle cx="10" cy="13" r="4" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="42" cy="13" r="4" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M16 13h20" stroke="currentColor" stroke-width="1.6" stroke-dasharray="2 3"/></svg></span>
+            <span class="lab">stereo<small>where it stood in the sky</small></span>
+          </div>
+        </div>
+        <div class="console__cap">deterministic &middot; no learned weights &middot; same record in, same audio out</div>
+      </div>
+
+      <h2 id="pitch">1. Brightness to pitch</h2>
+      <p>Brightness sets the frequency of the tone. The mapping is logarithmic in flux (linear in magnitude), which matches both how the eye judges brightness and how the ear judges pitch, so equal steps in magnitude are equal musical intervals. Magnitudes are inverted for you: a smaller magnitude is brighter, and brighter reads higher.</p>
+      <div class="sig"><span class="nm">BrightnessToPitch</span>(f_lo=220, f_hi=1760, scale=&quot;mag&quot;, clip=True)</div>
+      <ul class="paramlist">
+        <li><span class="pn">f_lo</span>, <span class="pn">f_hi</span> <span class="pt">float, Hz</span> &middot; the pitch range. The dimmest sample maps to <code>f_lo</code>, the brightest to <code>f_hi</code>. Two octaves is a good default.</li>
+        <li><span class="pn">scale</span> <span class="pt">&quot;mag&quot; | &quot;flux&quot;</span> &middot; whether the input array is magnitudes (inverted) or normalized flux (not inverted).</li>
+        <li><span class="pn">clip</span> <span class="pt">bool</span> &middot; clamp out-of-range samples to the endpoints rather than letting the tone run off the scale.</li>
+      </ul>
+
+      <h2 id="tempo">2. Time to tempo</h2>
+      <p>Record-time is compressed to playback-time by one linear factor. You set either the total clip length or, for periodic data, how many cycles to play. The gaps between observations are preserved exactly: a two-week hole in the record is a two-week hole in the sound, scaled by the same factor as everything else. The library never interpolates across a gap.</p>
+      <div class="sig"><span class="nm">TimeToTempo</span>(seconds=None, cycles=None, gap=&quot;preserve&quot;)</div>
+      <ul class="paramlist">
+        <li><span class="pn">seconds</span> <span class="pt">float</span> &middot; total playback length; the whole record span is fit to this.</li>
+        <li><span class="pn">cycles</span> <span class="pt">int</span> &middot; for data with a declared <code>period</code>, play this many periods instead of setting a fixed length.</li>
+        <li><span class="pn">gap</span> <span class="pt">&quot;preserve&quot; | &quot;mark&quot;</span> &middot; <code>preserve</code> keeps silent gaps to scale; <code>mark</code> adds a faint tick at each gap edge so a listener can hear where the record went dark.</li>
+      </ul>
+
+      <h2 id="stereo">3. Position to stereo</h2>
+      <p>Where the object stood in the sky sets the stereo image. In <code>azimuth</code> mode the object pans left to right by its horizontal angle; in <code>hemisphere</code> mode the pan carries declination. For a moving object (a comet track) the pan follows the recorded motion, so you hear it cross the sky. Positions are placed through Astropy in the coordinate frame of the record's own date, with precession applied.</p>
+      <div class="sig"><span class="nm">PositionToStereo</span>(coords, mode=&quot;azimuth&quot;, width=0.9)</div>
+      <ul class="paramlist">
+        <li><span class="pn">coords</span> <span class="pt">SkyCoord | SkyPath</span> &middot; a fixed position or a dated track. Precession to the record's epoch is handled by Astropy.</li>
+        <li><span class="pn">mode</span> <span class="pt">&quot;azimuth&quot; | &quot;hemisphere&quot; | &quot;fixed&quot;</span> &middot; what the pan encodes.</li>
+        <li><span class="pn">width</span> <span class="pt">float, 0-1</span> &middot; how far toward the channel extremes the pan is allowed to travel.</li>
+      </ul>
+
+      <div class="note note--warn">
+        <span class="note__k">Uncertainty is a first-class input</span>
+        Every rule accepts an uncertainty channel. <code>render(&hellip;, jitter=&quot;date_sigma&quot;)</code> softens each note's onset by its dated uncertainty; <code>jitter=&quot;pos_sigma&quot;</code> widens the stereo image by the position error. The sound is never allowed to claim more precision than the record holds. A record whose cross-identification is only a candidate carries that flag through to the audio, so a debated event is never played as if it were settled.
+      </div>
+
+      <div class="score-strip score-strip--section" role="presentation"></div>
+
+      <h2 id="api">API reference</h2>
+      <p>The public surface is deliberately small. In v0.3.1 it is nine objects and four module functions, and it covers everything on this site. The surface is frozen for the 0.3 line; anything that would change it waits for a minor release and a changelog entry.</p>
+
+      <h3 id="api-records">Records</h3>
+      <div class="sig">xj.<span class="nm">from_record</span>(record_id) &rarr; Record</div>
+      <p>Load a curated, cross-identified record by its <code>XJ-</code> id. The returned <code>Record</code> exposes <code>.source</code>, <code>.cross_id</code>, <code>.confidence</code>, <code>.coords</code>, and constructors <code>.light_curve()</code> and <code>.sky_path()</code>.</p>
+      <div class="sig">xj.<span class="nm">records</span>(kind=None) &rarr; list[Record]</div>
+      <p>Every curated record (ten in v0.3.1), optionally filtered by <code>kind</code> (<code>&quot;supernova&quot;</code>, <code>&quot;nova&quot;</code>, <code>&quot;comet&quot;</code>, <code>&quot;eclipse&quot;</code>, <code>&quot;sunspot&quot;</code>, <code>&quot;meteor&quot;</code>, <code>&quot;chart&quot;</code>). Iterating this is how the <a href="gallery.html">gallery</a> is regenerated.</p>
+
+      <h3 id="api-data">Data objects</h3>
+      <table class="apitable">
+        <thead><tr><th>Object</th><th>Constructor</th><th>Holds</th></tr></thead>
+        <tbody>
+          <tr><td><code>LightCurve</code></td><td><code>LightCurve(times, mags=&hellip;, flux=&hellip;, label, period=None, date_sigma=None)</code></td><td>a brightness series in time, with optional per-point date uncertainty</td></tr>
+          <tr><td><code>SkyPath</code></td><td><code>SkyPath(times, ra, dec, mags=None, pos_sigma=None)</code></td><td>a dated track of positions for a moving object</td></tr>
+          <tr><td><code>Record</code></td><td><code>xj.from_record(id)</code></td><td>a curated record: source, cross-id, confidence, coords, builders</td></tr>
+          <tr><td><code>Audio</code></td><td>returned by <code>render</code> / <code>sonify</code></td><td>a stereo float array plus <code>samplerate</code>; <code>.write(path)</code>, <code>.data</code></td></tr>
+        </tbody>
+      </table>
+
+      <h3 id="api-sonifier">Sonifier</h3>
+      <div class="sig">xj.<span class="nm">Sonifier</span>(pitch, tempo=None, stereo=None, timbre=&quot;sine&quot;)</div>
+      <ul class="paramlist">
+        <li><span class="pn">pitch</span> <span class="pt">BrightnessToPitch</span> &middot; required. The brightness-to-pitch rule.</li>
+        <li><span class="pn">tempo</span> <span class="pt">TimeToTempo</span> &middot; how record-time maps to playback-time.</li>
+        <li><span class="pn">stereo</span> <span class="pt">PositionToStereo</span> &middot; optional; omit for a centred mono image.</li>
+        <li><span class="pn">timbre</span> <span class="pt">&quot;sine&quot; | &quot;triangle&quot; | &quot;pluck&quot;</span> &middot; the tone colour. Timbre carries no data; it is a listening aid only.</li>
+      </ul>
+      <div class="sig">Sonifier.<span class="nm">render</span>(series, jitter=None) &rarr; Audio</div>
+      <p>Apply the configured rules to a <code>LightCurve</code> or <code>SkyPath</code> and return the <code>Audio</code>. <code>jitter</code> selects an uncertainty channel to fold in.</p>
+
+      <h3 id="api-module">Module shortcuts</h3>
+      <table class="apitable">
+        <thead><tr><th>Function</th><th>Does</th></tr></thead>
+        <tbody>
+          <tr><td><code>xj.sonify(record)</code></td><td>render a curated record with the mapping it was published with, in one call</td></tr>
+          <tr><td><code>xj.plot(series, audio)</code></td><td>the two-panel plate: waveform above, log-frequency spectrogram below. Returns a matplotlib <code>Figure</code></td></tr>
+          <tr><td><code>xj.data.load_kepler(id)</code></td><td>fetch a detrended Kepler light curve from MAST (example data)</td></tr>
+          <tr><td><code>xj.data.load_aavso(id)</code></td><td>fetch a phase-folded variable-star curve from the AAVSO archive (example data)</td></tr>
+        </tbody>
+      </table>
+
+      <div class="note">
+        <span class="note__k">Determinism guarantee</span>
+        Given the same input arrays, the same rule parameters, and the same library version, <code>render</code> returns byte-identical audio. This is tested in CI against stored checksums for every curated record, so a regression in the mapping cannot ship silently.
+      </div>
+
+      <p style="margin-top:2rem"><a href="gallery.html">Next: the audio gallery, ten curated events &rarr;</a></p>
+    </div>
+  </main>
+
+  <nav class="docs__toc" aria-label="On this page">
+    <p class="toc-h">On this page</p>
+    <ul class="toc-list">
+      <li><a href="#pitch">1. Brightness to pitch</a></li>
+      <li><a href="#tempo">2. Time to tempo</a></li>
+      <li><a href="#stereo">3. Position to stereo</a></li>
+      <li><a href="#api">API reference</a></li>
+      <li><a href="#api-records" class="sub">Records</a></li>
+      <li><a href="#api-data" class="sub">Data objects</a></li>
+      <li><a href="#api-sonifier" class="sub">Sonifier</a></li>
+      <li><a href="#api-module" class="sub">Module shortcuts</a></li>
+    </ul>
+  </nav>
+</div>
+
+<footer class="foot">
+  <div class="foot__strip" role="presentation"></div>
+  <div class="foot__cols">
+    <div class="foot__id">
+      <img class="foot__logo" src="../assets/img/logo/logo-dark.svg" alt="Xuanji">
+      <p>An open-source engine that renders historical astronomical records as sound. Author and maintainer: Aiden Yeoh. Built on Astropy and the scientific-Python stack.</p>
+    </div>
+    <div>
+      <h5>Docs</h5>
+      <ul>
+        <li><a href="index.html">Overview</a></li>
+        <li><a href="install.html">Install &amp; quickstart</a></li>
+        <li><a href="tutorial.html">Tutorial</a></li>
+        <li><a href="mapping.html">Mapping model &amp; API</a></li>
+        <li><a href="gallery.html">Audio gallery</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5>Project</h5>
+      <ul>
+        <li><a href="https://github.com/xuanji-project/xuanji" rel="external">Source (GitHub)</a></li>
+        <li><a href="install.html#changelog">Changelog</a></li>
+        <li><a href="gallery.html#contribute">Contribute a record</a></li>
+        <li><a href="index.html#cite">How to cite</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5>Cite</h5>
+      <ul>
+        <li>Yeoh, A. (2026). <em>Xuanji</em> (v0.3.1) [software].</li>
+        <li><a href="https://doi.org/10.5281/zenodo.reserved" rel="external">Zenodo DOI (reserved)</a></li>
+        <li><small>JOSS paper in preparation</small></li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot__base">
+    <span><img class="foot__seal" src="../assets/img/logo/logo-mono.svg" alt="">Xuanji &middot; 璇玑 &middot; a jade tube for regulating the sky</span>
+    <span>Nebula and remnant imagery: NASA / ESA / CXC, public domain. Charts: British Library and Wikimedia Commons.</span>
+  </div>
+</footer>
+
+<script src="../assets/js/xuanji.js"></script>

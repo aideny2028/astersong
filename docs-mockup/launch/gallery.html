@@ -1,0 +1,380 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Audio gallery, Xuanji</title>
+<meta name="description" content="Ten curated historical astronomical records rendered as sound, each cross-identified with its uncertainty kept: SN 185, SN 1006, SN 1054, Kepler's SN 1604, a comet track, the Dunhuang chart, an eclipse, a meteor storm, a sunspot, and the guest star of 1408.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="../assets/img/logo/logo-mono.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=Noto+Serif+SC:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/xuanji-docs.css">
+
+<header class="masthead">
+  <div class="masthead__bar">
+    <a class="brand" href="index.html" aria-label="Xuanji home">
+      <img class="brand__logo" src="../assets/img/logo/logo.svg" alt="Xuanji">
+      <span class="brand__tag">sonification library</span>
+    </a>
+    <span class="pill pill--accent" title="pre-1.0 public release">v0.3.1</span>
+    <nav class="masthead__nav">
+      <a href="index.html">Overview</a>
+      <a href="install.html">Install</a>
+      <a href="tutorial.html">Tutorial</a>
+      <a href="mapping.html">Mapping</a>
+      <a href="gallery.html" class="is-active">Gallery</a>
+      <a href="https://github.com/xuanji-project/xuanji" rel="external">GitHub</a>
+      <span class="pipchip" data-copy="pip install xuanji" data-label="pip install xuanji" title="click to copy"><b>$</b> pip install xuanji</span>
+    </nav>
+  </div>
+</header>
+<div class="score-strip" role="presentation"></div>
+
+<div class="docs">
+  <aside class="docs__side">
+    <button class="menu-toggle" aria-label="Toggle navigation">
+      <svg class="glyph" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg> Contents
+    </button>
+    <div class="nav-groups">
+      <div class="nav-group">
+        <p class="nav-group__h">Getting started</p>
+        <ul class="nav-list">
+          <li><a href="index.html">Overview</a></li>
+          <li><a href="install.html">Install &amp; quickstart</a></li>
+        </ul>
+      </div>
+      <div class="nav-group">
+        <p class="nav-group__h">Guides</p>
+        <ul class="nav-list">
+          <li><a href="tutorial.html">Tutorial</a></li>
+          <li><a href="mapping.html">Mapping model</a></li>
+          <li><a href="mapping.html#api">API reference</a></li>
+          <li><a href="gallery.html" class="is-active">Audio gallery</a></li>
+        </ul>
+      </div>
+      <div class="nav-group">
+        <p class="nav-group__h">In this gallery</p>
+        <ul class="nav-list">
+          <li><a href="#sn1006">SN 1006</a></li>
+          <li><a href="#sn1054">SN 1054</a></li>
+          <li><a href="#sn185">SN 185</a></li>
+          <li><a href="#sn1604">SN 1604 (Kepler)</a></li>
+          <li><a href="#guest1408">Guest star of 1408</a></li>
+          <li><a href="#halley">Halley comet track</a></li>
+          <li><a href="#dunhuang">Dunhuang chart</a></li>
+          <li><a href="#eclipse">Solar eclipse</a></li>
+          <li><a href="#meteors">Meteor storm</a></li>
+          <li><a href="#sunspot">Naked-eye sunspot</a></li>
+          <li><a href="#contribute">Contribute a record</a></li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+  <main class="docs__main">
+    <div class="page-head">
+      <p class="crumb">Guides / Audio gallery</p>
+      <h1>Ten records, made audible</h1>
+      <p class="sub">Each entry below is a historical astronomical record rendered by the three fixed mapping rules. Every one names its primary source, its modern cross-identification, and how firm that link is. Where the identification is only a candidate, the entry says so, and the sound carries that uncertainty rather than hiding it. These are the ten records that ship curated in v0.3.1.</p>
+    </div>
+
+    <div class="prose">
+      <p>Read each card the way you would read a catalogue entry, not a track listing. The figure is a two-panel plate from <code>xj.plot()</code>: the waveform above, a log-frequency spectrogram below. The player is the rendered <code>.wav</code>. The three-line data block is what makes the audio citable, and it is the point of the whole project: a note in a court chronicle only becomes usable evidence once you can say which modern object it names, and with what confidence.</p>
+
+      <dl class="gallery-legend">
+        <div><dt>Primary source</dt><dd>the record as written: a court chronicle, a treatise, a star atlas. Sonification never replaces reading the source; it is one more way to interrogate it.</dd></div>
+        <div><dt>Cross-ID &amp; confidence</dt><dd>the modern object the record is matched to, and whether that match is secure or still a candidate. A debated remnant stays labelled debated.</dd></div>
+        <div><dt>Mapping</dt><dd>which rules were applied and why. Brightness to pitch, time to tempo, sky-position to stereo, with the record's uncertainty folded in.</dd></div>
+      </dl>
+
+      <div class="score-strip score-strip--section" role="presentation"></div>
+
+      <div class="gallery">
+
+        <article class="event" id="sn1006">
+          <div class="event__grid">
+            <div class="event__fig">
+              <img src="../assets/img/fig/sn1006.png" alt="Waveform and log-frequency spectrogram of the SN 1006 sonification, a very high sustained pitch decaying slowly">
+              <p class="plate-cap"><span class="accent">plate</span> &middot; SN 1006 / Lupus. The brightest stellar event on record sits at the top of the pitch range.</p>
+            </div>
+            <div class="event__meta">
+              <h3>SN 1006, the brightest of them all</h3>
+              <p class="event__id"><span class="xid">XJ-1006</span> &middot; supernova &middot; Lupus</p>
+              <p class="event__desc">A guest star seen in spring 1006 was recorded independently across Eurasia. It is the brightest stellar event in the historical record, bright enough to read by. Four cultures logging one object is what makes its brightness history trustworthy.</p>
+              <ul class="event__data">
+                <li><span class="k">Source</span><span class="v">Song Shi and Song Hui Yao (China); Ali ibn Ridwan's commentary on Ptolemy (Egypt); Japanese and European annals</span></li>
+                <li><span class="k">Cross-ID</span><span class="v">SNR G327.6+14.6 (PKS 1459-41), a Type Ia remnant</span></li>
+                <li><span class="k">Confidence</span><span class="v">secure</span></li>
+                <li><span class="k">Mapping</span><span class="v">brightness &rarr; pitch; peak magnitude near -7.5 pins the top note, then a slow multi-month decline</span></li>
+              </ul>
+              <div class="audio-wrap"><div class="al"><span>XJ-1006 &middot; sonification</span><span>Lupus</span></div><audio controls preload="none" src="../assets/audio/sn1006.mp3"></audio></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="event" id="sn1054">
+          <div class="event__grid">
+            <div class="event__fig">
+              <img src="../assets/img/fig/sn1054.png" alt="Waveform and log-frequency spectrogram of the SN 1054 sonification, a bright onset falling in stepped stages">
+              <p class="plate-cap"><span class="accent">plate</span> &middot; SN 1054 / Taurus. ~2 years of visibility compressed to 22 s; onsets softened by date uncertainty.</p>
+            </div>
+            <div class="event__meta">
+              <h3>The guest star of 1054, the Crab</h3>
+              <p class="event__id"><span class="xid">XJ-1054</span> &middot; supernova &middot; Taurus</p>
+              <p class="event__desc">Song-dynasty astronomers logged a <span lang="zh" class="han">客星</span> near Tianguan on 4 July 1054, visible in daylight for about 23 days and at night for roughly two years. The reconstruction is a hypothesis about its brightness history, drawn from dated phrases in the treatise.</p>
+              <ul class="event__data">
+                <li><span class="k">Source</span><span class="v">Song Shi, Astronomical Treatise; guest star near Tianguan (zeta Tauri)</span></li>
+                <li><span class="k">Cross-ID</span><span class="v">Crab Nebula (M1) and its pulsar</span></li>
+                <li><span class="k">Confidence</span><span class="v">secure</span></li>
+                <li><span class="k">Mapping</span><span class="v">brightness &rarr; pitch, ~2 yr &rarr; 22 s; <code>jitter=&quot;date_sigma&quot;</code> blurs uncertain onsets</span></li>
+              </ul>
+              <div class="audio-wrap"><div class="al"><span>XJ-1054 &middot; sonification</span><span>Taurus</span></div><audio controls preload="none" src="../assets/audio/sn1054.mp3"></audio></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="event" id="sn185">
+          <div class="event__grid">
+            <div class="event__fig">
+              <img src="../assets/img/fig/sn185.png" alt="Waveform and log-frequency spectrogram of the SN 185 sonification, a wide, uncertain onset and a long fade">
+              <p class="plate-cap"><span class="accent">plate</span> &middot; SN 185 / near Nanmen. The wide, blurred onset is the debated cross-identification made audible.</p>
+            </div>
+            <div class="event__meta">
+              <h3>The guest star of 185, a debated remnant</h3>
+              <p class="event__id"><span class="xid">XJ-0185</span> &middot; supernova &middot; near Alpha / Beta Centauri</p>
+              <p class="event__desc">The Book of Later Han records a guest star of December 185 near Nanmen, visible for months. It is often called the earliest recorded supernova, but the link is not settled: some read the duration as too long for a supernova.</p>
+              <ul class="event__data">
+                <li><span class="k">Source</span><span class="v">Hou Han Shu (Book of Later Han), Treatise on Astronomy; guest star near Nanmen</span></li>
+                <li><span class="k">Cross-ID</span><span class="v">RCW 86 (candidate); a slow-nova reading has also been argued</span></li>
+                <li><span class="k">Confidence</span><span class="v unc">candidate &middot; debated</span></li>
+                <li><span class="k">Mapping</span><span class="v">brightness &rarr; pitch; the coarse duration is left coarse, and the identity flag rides through to the sound</span></li>
+              </ul>
+              <div class="audio-wrap"><div class="al"><span>XJ-0185 &middot; sonification</span><span>candidate remnant</span></div><audio controls preload="none" src="../assets/audio/sn185.mp3"></audio></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="event" id="sn1604">
+          <div class="event__grid">
+            <div class="event__fig">
+              <img src="../assets/img/fig/sn1604.png" alt="Waveform and log-frequency spectrogram of the SN 1604 sonification, a sharp bright onset and a steady decline">
+              <p class="plate-cap"><span class="accent">plate</span> &middot; SN 1604 / Ophiuchus. Reconstructed from Kepler's and Korean dated magnitude estimates.</p>
+            </div>
+            <div class="event__meta">
+              <h3>Kepler's star of 1604</h3>
+              <p class="event__id"><span class="xid">XJ-1604</span> &middot; supernova &middot; Ophiuchus</p>
+              <p class="event__desc">First seen on 9 October 1604 and studied by Johannes Kepler, who published a book on it. Korean and Chinese court records give it a densely dated brightness track, the last confirmed naked-eye supernova in our galaxy.</p>
+              <ul class="event__data">
+                <li><span class="k">Source</span><span class="v">Kepler, De Stella Nova (1606); Korean Seonjo Sillok; Ming court records</span></li>
+                <li><span class="k">Cross-ID</span><span class="v">Kepler's SNR (G4.5+6.8)</span></li>
+                <li><span class="k">Confidence</span><span class="v">secure</span></li>
+                <li><span class="k">Mapping</span><span class="v">brightness &rarr; pitch from dated magnitude estimates; time &rarr; tempo over ~12 months</span></li>
+              </ul>
+              <div class="audio-wrap"><div class="al"><span>XJ-1604 &middot; sonification</span><span>Ophiuchus</span></div><audio controls preload="none" src="../assets/audio/sn1604.mp3"></audio></div>
+            </div>
+          </div>
+        </article>
+
+        <div class="score-strip score-strip--section" role="presentation"></div>
+
+        <article class="event" id="guest1408">
+          <div class="event__grid">
+            <div class="event__fig">
+              <img src="../assets/img/fig/guest1408.png" alt="Waveform and log-frequency spectrogram of the 1408 guest star sonification, a brief high tone that fades">
+              <p class="plate-cap"><span class="accent">plate</span> &middot; guest star of 1408 / Cygnus region. A short-lived event whose identity is still open.</p>
+            </div>
+            <div class="event__meta">
+              <h3>The guest star of 1408</h3>
+              <p class="event__id"><span class="xid">XJ-1408</span> &middot; nova (candidate) &middot; Cygnus region</p>
+              <p class="event__desc">Ming records note a yellow guest star in 1408 near Niandao, in the region of Cygnus. It is a short, well-dated event, but the modern identification is unsettled and some proposed associations are speculative. It is included precisely to show how the library handles an open case.</p>
+              <ul class="event__data">
+                <li><span class="k">Source</span><span class="v">Ming Shilu (Veritable Records of the Ming) and local gazetteers; guest star near Niandao</span></li>
+                <li><span class="k">Cross-ID</span><span class="v">unresolved; candidate nova in Cygnus, proposed X-ray-source links are not accepted</span></li>
+                <li><span class="k">Confidence</span><span class="v unc">debated &middot; identity open</span></li>
+                <li><span class="k">Mapping</span><span class="v">brightness &rarr; pitch; a brief high onset that fades, its short baseline left as short as the record</span></li>
+              </ul>
+              <div class="audio-wrap"><div class="al"><span>XJ-1408 &middot; sonification</span><span>candidate nova</span></div><audio controls preload="none" src="../assets/audio/guest1408.mp3"></audio></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="event" id="halley">
+          <div class="event__grid">
+            <div class="event__fig">
+              <img src="../assets/img/fig/halley.png" alt="Waveform and log-frequency spectrogram of the Halley comet track sonification, the pitch panning across the stereo field">
+              <p class="plate-cap"><span class="accent">plate</span> &middot; Halley apparition. A dated night-by-night track: the pan carries the comet's motion across the sky.</p>
+            </div>
+            <div class="event__meta">
+              <h3>A comet track: Halley across the sky</h3>
+              <p class="event__id"><span class="xid">XJ-HALLEY</span> &middot; comet &middot; moving object</p>
+              <p class="event__desc">Chinese court astronomers logged comets night by night with positions against the asterisms. Threaded across apparitions, those tracks belong to one periodic comet. This is the library's positional case: a <code>SkyPath</code>, not a light curve.</p>
+              <ul class="event__data">
+                <li><span class="k">Source</span><span class="v">Chinese apparition records; the -240 sighting in the Shiji is the earliest generally accepted</span></li>
+                <li><span class="k">Cross-ID</span><span class="v">1P/Halley, orbital period ~76 years</span></li>
+                <li><span class="k">Confidence</span><span class="v">secure</span></li>
+                <li><span class="k">Mapping</span><span class="v">position &rarr; stereo (the pan follows the recorded track); brightness &rarr; pitch</span></li>
+              </ul>
+              <div class="audio-wrap"><div class="al"><span>XJ-HALLEY &middot; sonification</span><span>position &rarr; stereo</span></div><audio controls preload="none" src="../assets/audio/halley.mp3"></audio></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="event" id="dunhuang">
+          <div class="event__grid">
+            <div class="event__fig">
+              <img src="../assets/img/fig/dunhuang.png" alt="Waveform and log-frequency spectrogram of the Dunhuang star chart sonification, a sweep of tones across the stereo field">
+              <p class="plate-cap"><span class="accent">plate</span> &middot; Dunhuang chart (~700 CE, British Library). A sonified map: a sweep across charted stars, not a time series.</p>
+            </div>
+            <div class="event__meta">
+              <h3>The Dunhuang star chart, a sky read as sound</h3>
+              <p class="event__id"><span class="xid">XJ-DUNHUANG</span> &middot; chart &middot; whole-sky atlas</p>
+              <p class="event__desc">The Dunhuang manuscript is the oldest surviving portable star atlas, held by the British Library (Or.8210/S.3326) and dated to about 700 CE. It charts more than 1,300 stars. There is no light curve here; the sound is a traverse of the map itself.</p>
+              <ul class="event__data">
+                <li><span class="k">Source</span><span class="v">Dunhuang star atlas, British Library Or.8210/S.3326, from the Mogao caves</span></li>
+                <li><span class="k">Cross-ID</span><span class="v">its asterisms matched to the modern sky; the ~700 CE date is a scholarly estimate</span></li>
+                <li><span class="k">Confidence</span><span class="v unc">object secure; dating ~700 CE estimated</span></li>
+                <li><span class="k">Mapping</span><span class="v">a sky sweep: each charted star's position &rarr; stereo, brightness &rarr; pitch</span></li>
+              </ul>
+              <div class="audio-wrap"><div class="al"><span>XJ-DUNHUANG &middot; sonification</span><span>map traverse</span></div><audio controls preload="none" src="../assets/audio/dunhuang.mp3"></audio></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="event" id="eclipse">
+          <div class="event__grid">
+            <div class="event__fig">
+              <img src="../assets/img/fig/eclipse.png" alt="Waveform and log-frequency spectrogram of the solar eclipse sonification, the tone falling to silence at totality then returning">
+              <p class="plate-cap"><span class="accent">plate</span> &middot; a dated solar eclipse. The tone falls to silence at totality, then returns.</p>
+            </div>
+            <div class="event__meta">
+              <h3>A solar eclipse: totality as silence</h3>
+              <p class="event__id"><span class="xid">XJ-ECLIPSE</span> &middot; eclipse &middot; timed event</p>
+              <p class="event__desc">Chinese chronicles carry some of the oldest dated eclipse observations, kept because a failure of the Sun demanded a court response. Back-computed against modern ephemerides, a phrase becomes a timed light curve that drops to nothing at totality.</p>
+              <ul class="event__data">
+                <li><span class="k">Source</span><span class="v">Chinese court eclipse records (Chunqiu-era annals and later chronicles)</span></li>
+                <li><span class="k">Cross-ID</span><span class="v">matched to a specific dated eclipse via modern ephemeris computation</span></li>
+                <li><span class="k">Confidence</span><span class="v">secure (once the date resolves to one eclipse)</span></li>
+                <li><span class="k">Mapping</span><span class="v">brightness &rarr; pitch; totality reads as silence; time &rarr; tempo across contact phases</span></li>
+              </ul>
+              <div class="audio-wrap"><div class="al"><span>XJ-ECLIPSE &middot; sonification</span><span>totality &rarr; silence</span></div><audio controls preload="none" src="../assets/audio/eclipse.mp3"></audio></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="event" id="meteors">
+          <div class="event__grid">
+            <div class="event__fig">
+              <img src="../assets/img/fig/meteors.png" alt="Waveform and log-frequency spectrogram of the meteor storm sonification, a dense rush of grain transients">
+              <p class="plate-cap"><span class="accent">plate</span> &middot; a meteor storm. Each recorded meteor is a grain transient; the display rate sets the tempo.</p>
+            </div>
+            <div class="event__meta">
+              <h3>A night the stars fell like rain</h3>
+              <p class="event__id"><span class="xid">XJ-METEOR</span> &middot; meteor &middot; timed display</p>
+              <p class="event__desc">Chinese observers logged nights when meteors fell too fast to count, sometimes with directions and rough rates. Linking one dated storm to a known stream is a hypothesis, so the association is kept as a candidate, not stated as fact.</p>
+              <ul class="event__data">
+                <li><span class="k">Source</span><span class="v">Chinese records of dense meteor displays, logged with counts and directions</span></li>
+                <li><span class="k">Cross-ID</span><span class="v">candidate historical return of a known stream (e.g. an early Leonid outburst)</span></li>
+                <li><span class="k">Confidence</span><span class="v unc">stream association candidate</span></li>
+                <li><span class="k">Mapping</span><span class="v">each meteor &rarr; a grain transient; recorded rate &rarr; tempo, so a storm is a rush of onsets</span></li>
+              </ul>
+              <div class="audio-wrap"><div class="al"><span>XJ-METEOR &middot; sonification</span><span>rate &rarr; tempo</span></div><audio controls preload="none" src="../assets/audio/meteors.mp3"></audio></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="event" id="sunspot">
+          <div class="event__grid">
+            <div class="event__fig">
+              <img src="../assets/img/fig/sunspot.png" alt="Waveform and log-frequency spectrogram of the naked-eye sunspot sonification, a steady bright tone with a low dip">
+              <p class="plate-cap"><span class="accent">plate</span> &middot; a naked-eye sunspot. A dark grain in the Sun reads as a low dip in an otherwise steady tone.</p>
+            </div>
+            <div class="event__meta">
+              <h3>A dark spot within the Sun</h3>
+              <p class="event__id"><span class="xid">XJ-SUNSPOT</span> &middot; sunspot &middot; solar record</p>
+              <p class="event__desc">The Book of Han describes a black vapour "as large as a coin" within the Sun in 28 BCE, among the earliest dated sunspot records, seen through haze at naked-eye scale. A run of such records tracks solar activity long before telescopes.</p>
+              <ul class="event__data">
+                <li><span class="k">Source</span><span class="v">Han Shu (Book of Han), 28 BCE; later Chinese naked-eye sunspot notes</span></li>
+                <li><span class="k">Cross-ID</span><span class="v">a large naked-eye sunspot group, visible at high activity through haze</span></li>
+                <li><span class="k">Confidence</span><span class="v">secure as a sunspot record; individual dating varies</span></li>
+                <li><span class="k">Mapping</span><span class="v">the dark grain &rarr; a low dip in a bright steady tone; time &rarr; tempo across days visible</span></li>
+              </ul>
+              <div class="audio-wrap"><div class="al"><span>XJ-SUNSPOT &middot; sonification</span><span>dark grain &rarr; dip</span></div><audio controls preload="none" src="../assets/audio/sunspot.mp3"></audio></div>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+      <div class="score-strip score-strip--section" role="presentation"></div>
+
+      <h2 id="contribute">Contribute a record</h2>
+      <p>The curated set is small on purpose: every record here was read against its primary source and given an explicit cross-identification and confidence before it shipped. If you have a dated observation with a source you can point to, it can join the set. A contribution is a record file, not a sound file: the audio is generated deterministically from the mapping.</p>
+      <div class="note">
+        <span class="note__k">What a record needs</span>
+        A primary source you can cite, a dated brightness or position series transcribed from it, a proposed cross-identification with an honest confidence label, and the coordinates in the record's own epoch. Debated is a valid confidence: an unresolved case is welcome as long as it is marked unresolved. See <a href="https://github.com/xuanji-project/xuanji/blob/main/CONTRIBUTING.md" rel="external">CONTRIBUTING.md</a>.
+      </div>
+      <p>An advisory slot for source review is currently open. Until it is filled, cross-identifications are carried at the confidence the published literature supports, and nothing is upgraded from candidate to secure without a citation.</p>
+
+      <p style="margin-top:2rem"><a href="index.html">Back to the overview &rarr;</a></p>
+    </div>
+  </main>
+
+  <nav class="docs__toc" aria-label="On this page">
+    <p class="toc-h">On this page</p>
+    <ul class="toc-list">
+      <li><a href="#sn1006">SN 1006</a></li>
+      <li><a href="#sn1054">SN 1054</a></li>
+      <li><a href="#sn185">SN 185</a></li>
+      <li><a href="#sn1604">SN 1604 (Kepler)</a></li>
+      <li><a href="#guest1408">Guest star of 1408</a></li>
+      <li><a href="#halley">Halley comet track</a></li>
+      <li><a href="#dunhuang">Dunhuang chart</a></li>
+      <li><a href="#eclipse">Solar eclipse</a></li>
+      <li><a href="#meteors">Meteor storm</a></li>
+      <li><a href="#sunspot">Naked-eye sunspot</a></li>
+      <li><a href="#contribute">Contribute a record</a></li>
+    </ul>
+  </nav>
+</div>
+
+<footer class="foot">
+  <div class="foot__strip" role="presentation"></div>
+  <div class="foot__cols">
+    <div class="foot__id">
+      <img class="foot__logo" src="../assets/img/logo/logo-dark.svg" alt="Xuanji">
+      <p>An open-source engine that renders historical astronomical records as sound. Author and maintainer: Aiden Yeoh. Built on Astropy and the scientific-Python stack.</p>
+    </div>
+    <div>
+      <h5>Docs</h5>
+      <ul>
+        <li><a href="index.html">Overview</a></li>
+        <li><a href="install.html">Install &amp; quickstart</a></li>
+        <li><a href="tutorial.html">Tutorial</a></li>
+        <li><a href="mapping.html">Mapping model &amp; API</a></li>
+        <li><a href="gallery.html">Audio gallery</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5>Project</h5>
+      <ul>
+        <li><a href="https://github.com/xuanji-project/xuanji" rel="external">Source (GitHub)</a></li>
+        <li><a href="install.html#changelog">Changelog</a></li>
+        <li><a href="gallery.html#contribute">Contribute a record</a></li>
+        <li><a href="index.html#cite">How to cite</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5>Cite</h5>
+      <ul>
+        <li>Yeoh, A. (2026). <em>Xuanji</em> (v0.3.1) [software].</li>
+        <li><a href="https://doi.org/10.5281/zenodo.reserved" rel="external">Zenodo DOI (reserved)</a></li>
+        <li><small>JOSS paper in preparation</small></li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot__base">
+    <span><img class="foot__seal" src="../assets/img/logo/logo-mono.svg" alt="">Xuanji &middot; 璇玑 &middot; a jade tube for regulating the sky</span>
+    <span>Remnant and comet imagery: NASA / ESA / CXC, public domain. Charts: British Library and Wikimedia Commons. See IMAGE-CREDITS and provenance.</span>
+  </div>
+</footer>
+
+<script src="../assets/js/xuanji.js"></script>
