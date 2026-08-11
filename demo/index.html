@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AsterSong · live mapping demo</title>
+<meta name="description" content="Hear the brightness-decline-to-pitch mapping live: the same deterministic formula as the AsterSong Python package, synthesized in the browser.">
+<style>
+  :root{
+    --bg:#0B0E14; --panel:#131826; --ink:#D6DBE3; --ink-soft:#8B93A3;
+    --line:#242B3D; --accent:#E8A13D;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:16px/1.6 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+  .mono{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:640px;margin-inline:auto;padding:28px 20px 60px}
+  header h1{margin:0;font-size:1.7rem;letter-spacing:.01em}
+  header .sub{margin:6px 0 0;color:var(--ink-soft);font-size:.95rem;max-width:52ch}
+  header .repo{font-size:.8rem}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:8px;
+    padding:22px;margin-top:26px}
+  .ctl{margin:18px 0}
+  .ctl label{display:flex;justify-content:space-between;align-items:baseline;
+    font-size:.85rem;color:var(--ink-soft);margin-bottom:6px;gap:12px}
+  .ctl label b{color:var(--ink);font-weight:600}
+  .ctl .val{font-family:ui-monospace,"SF Mono",Menlo,monospace;color:var(--accent);
+    font-size:.95rem;white-space:nowrap}
+  input[type=range]{width:100%;height:34px;accent-color:var(--accent);cursor:pointer}
+  .note{font-size:.75rem;color:var(--ink-soft);margin:2px 0 0}
+  .playrow{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:22px}
+  #play{font:600 1.05rem/1 inherit;padding:16px 34px;border-radius:8px;cursor:pointer;
+    border:1px solid var(--accent);background:var(--accent);color:#141005;min-width:150px}
+  #play[data-on="1"]{background:transparent;color:var(--accent)}
+  .preset{font:.8rem/1 ui-monospace,"SF Mono",Menlo,monospace;padding:12px 14px;
+    border-radius:6px;border:1px solid var(--line);background:transparent;
+    color:var(--ink);cursor:pointer}
+  .preset:hover{border-color:var(--accent)}
+  #readout{margin-top:18px;padding:12px 14px;border:1px solid var(--line);
+    border-radius:6px;font-size:.8rem;line-height:1.8;color:var(--ink-soft);
+    overflow-x:auto}
+  #readout b{color:var(--ink);font-weight:600}
+  #caption{margin-top:10px;font-size:.8rem;color:var(--ink-soft);min-height:1.2em}
+  .how{margin-top:30px;font-size:.9rem;color:var(--ink-soft);max-width:60ch}
+  .how h2{font-size:1rem;color:var(--ink)}
+  button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>AsterSong</h1>
+    <p class="sub">Deterministic sonification of astronomical events: fixed, documented mappings, no generative audio.</p>
+    <p class="repo mono"><a href="https://github.com/aideny2028/astersong" rel="noopener">github.com/aideny2028/astersong</a></p>
+  </header>
+
+  <section class="panel" aria-label="The instrument">
+    <div class="ctl">
+      <label for="days"><b>Duration of visibility</b> <span class="val"><span id="days-v"></span> days</span></label>
+      <input type="range" id="days" min="10" max="1000" step="1" value="100">
+    </div>
+    <div class="ctl">
+      <label for="m0"><b>Starting brightness</b> <span class="val">magnitude <span id="m0-v"></span></span></label>
+      <input type="range" id="m0" min="-10" max="6" step="0.1" value="-1">
+    </div>
+    <div class="ctl">
+      <label for="m1"><b>Final brightness</b> <span class="val">magnitude <span id="m1-v"></span></span></label>
+      <input type="range" id="m1" min="-2" max="8" step="0.1" value="6">
+      <p class="note">Larger magnitude means fainter: +6 is roughly the naked-eye limit.</p>
+    </div>
+    <div class="ctl">
+      <label for="secs"><b>Listening time</b> <span class="val"><span id="secs-v"></span> s</span></label>
+      <input type="range" id="secs" min="5" max="60" step="1" value="12">
+      <p class="note">The whole decline is compressed into this many seconds by one linear factor.</p>
+    </div>
+
+    <div class="playrow">
+      <button id="play" data-on="0">Play</button>
+      <button class="preset" id="preset-sn1054">SN 1054 (the Crab supernova)</button>
+      <button class="preset" id="preset-reset">Reset</button>
+    </div>
+    <p id="caption"></p>
+
+    <div id="readout" class="mono" aria-live="polite"></div>
+  </section>
+
+  <section class="how">
+    <h2>How this works</h2>
+    <p>Apparent magnitude is already a logarithm of flux (the Pogson scale), and
+    pitch perception is a logarithm of frequency, so a mapping linear in
+    magnitude and logarithmic in frequency makes equal magnitude steps equal
+    musical intervals; brighter reads higher, and the brightest sample maps to
+    1760 Hz, the dimmest to 220 Hz. This page implements exactly the same
+    formula as the AsterSong Python package, including its fades and sample
+    rate, with no randomness anywhere: for a strictly linear decline the glide
+    is always the full 1760 Hz to 220 Hz, so the magnitude sliders set the
+    documented scale (semitones per magnitude) and the duration slider sets the
+    documented compression factor, which the readout shows. Gallery audio, when
+    it exists, will be rendered by the package itself; nothing here is
+    generated by AI audio models.</p>
+  </section>
+</div>
+
+<script>
+(function () {
+  "use strict";
+  /* The mapping, verbatim from the package (src/astersong/brightness.py):
+     f(m) = F_HI * (F_LO/F_HI) ** ((m - m_bright)/(m_dim - m_bright))
+     linear magnitude ramp over N = round(seconds*44100) samples,
+     phase = cumsum(2*pi*f/sr), raised-cosine fades of 0.05 s, amplitude 0.8,
+     int16 quantization with round-half-even. No randomness, no decoration. */
+  var F_LO = 220.0, F_HI = 1760.0, SR = 44100, AMP = 0.8, FADE = 0.05;
+  var FULL = 32767.0;
+
+  function magToFreq(m, mb, md) {
+    if (md === mb) return Math.sqrt(F_LO * F_HI);
+    return F_HI * Math.pow(F_LO / F_HI, (m - mb) / (md - mb));
+  }
+
+  function rintHalfEven(x) {
+    var f = Math.floor(x), d = x - f;
+    if (d < 0.5) return f;
+    if (d > 0.5) return f + 1;
+    return (f % 2 === 0) ? f : f + 1;
+  }
+
+  function renderSamples(m0, m1, secs) {
+    var n = Math.round(secs * SR);
+    var mb = Math.min(m0, m1), md = Math.max(m0, m1);
+    var k = Math.min(Math.round(FADE * SR), Math.floor(n / 2));
+    var out = new Float32Array(n);
+    var phase = 0;
+    for (var i = 0; i < n; i++) {
+      var u = i / (n - 1);
+      var m = m0 + (m1 - m0) * u;
+      var f = magToFreq(m, mb, md);
+      phase += 2 * Math.PI * f / SR;
+      var env = 1;
+      if (k > 0) {
+        if (i < k) env = 0.5 - 0.5 * Math.cos(Math.PI * i / k);
+        else if (i >= n - k) env = 0.5 - 0.5 * Math.cos(Math.PI * (n - 1 - i) / k);
+      }
+      var y = Math.sin(phase) * env * AMP;
+      out[i] = rintHalfEven(y * FULL) / FULL;
+    }
+    return out;
+  }
+
+  var $ = function (id) { return document.getElementById(id); };
+  var sliders = { days: $("days"), m0: $("m0"), m1: $("m1"), secs: $("secs") };
+  var ctx = null, srcNode = null;
+
+  function vals() {
+    return {
+      days: parseFloat(sliders.days.value),
+      m0: parseFloat(sliders.m0.value),
+      m1: parseFloat(sliders.m1.value),
+      secs: parseFloat(sliders.secs.value)
+    };
+  }
+
+  function fmt(x, d) { return x.toFixed(d === undefined ? 1 : d); }
+
+  function readout() {
+    var v = vals();
+    $("days-v").textContent = fmt(v.days, 0);
+    $("m0-v").textContent = fmt(v.m0);
+    $("m1-v").textContent = fmt(v.m1);
+    $("secs-v").textContent = fmt(v.secs, 0);
+    var mb = Math.min(v.m0, v.m1), md = Math.max(v.m0, v.m1);
+    var f0 = magToFreq(v.m0, mb, md), f1 = magToFreq(v.m1, mb, md);
+    var dm = Math.abs(v.m1 - v.m0);
+    var ratio = Math.max(f0, f1) / Math.min(f0, f1);
+    var semisPerMag = dm > 0 ? (12 * Math.log2(ratio)) / dm : 0;
+    var factor = v.days * 86400 / v.secs;
+    $("readout").innerHTML =
+      "magnitude change <b>" + fmt(dm) + "</b> mag &middot; " +
+      "frequency ratio <b>" + fmt(ratio, 3) + "</b> &middot; " +
+      "start <b>" + fmt(f0) + " Hz</b> &rarr; end <b>" + fmt(f1) + " Hz</b> &middot; " +
+      (dm > 0 ? "<b>" + fmt(semisPerMag, 2) + "</b> semitones per magnitude &middot; "
+              : "constant tone (equal magnitudes) &middot; ") +
+      "compression <b>&times;" + factor.toExponential(2).replace("e+", "e") + "</b> " +
+      "(" + fmt(v.days, 0) + " days &rarr; " + fmt(v.secs, 0) + " s)";
+  }
+
+  function stop() {
+    if (srcNode) { try { srcNode.stop(); } catch (e) {} srcNode = null; }
+    $("play").textContent = "Play";
+    $("play").setAttribute("data-on", "0");
+  }
+
+  function play() {
+    if (srcNode) { stop(); return; }
+    if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)();
+    if (ctx.state === "suspended") ctx.resume();
+    var v = vals();
+    var samples = renderSamples(v.m0, v.m1, v.secs);
+    var buf = ctx.createBuffer(1, samples.length, SR);
+    buf.copyToChannel(samples, 0);
+    var s = ctx.createBufferSource();
+    s.buffer = buf;
+    s.connect(ctx.destination);
+    s.onended = function () { if (srcNode === s) stop(); };
+    srcNode = s;
+    s.start();
+    $("play").textContent = "Stop";
+    $("play").setAttribute("data-on", "1");
+  }
+
+  function setSliders(days, m0, m1, secs, caption) {
+    stop();
+    sliders.days.value = days;
+    sliders.m0.value = m0;
+    sliders.m1.value = m1;
+    sliders.secs.value = secs;
+    $("caption").textContent = caption || "";
+    readout();
+  }
+
+  $("play").addEventListener("click", play);
+  $("preset-sn1054").addEventListener("click", function () {
+    setSliders(642, -6, 6, 22,
+      "The 1054 guest star faded from view over about 642 days; this preset " +
+      "compresses that decline into 22 seconds using the package's documented mapping.");
+  });
+  $("preset-reset").addEventListener("click", function () {
+    setSliders(100, -1, 6, 12, "");
+  });
+
+  Object.keys(sliders).forEach(function (k) {
+    sliders[k].addEventListener("input", function () {
+      $("caption").textContent = "";
+      readout();
+    });
+  });
+
+  readout();
+})();
+</script>
+</body>
+</html>
