@@ -1,5 +1,9 @@
 """Interface to the Xuanji guest-star dataset. TODO: not yet implemented.
 
+TODO (far future, recorded only, not planned): EEG signal as an input
+source through fixed deterministic mappings, per the EEG study's layer-3
+note; nothing here begins it.
+
 Design (docs-mockup, Tutorial example 3): ``from_record("XJ-1054")`` will load
 a record from the Xuanji archive's per-record JSON (``records/<id>.json``,
 schema per the archive's ``docs/schema.md``) and expose ``.source``,
